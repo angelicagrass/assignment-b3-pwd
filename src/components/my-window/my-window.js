@@ -23,7 +23,7 @@ template.innerHTML = `
     opacity: 0.9;
     z-index: 9;
     position: absolute;
-    /* resize: both; */
+    resize: both;
     overflow: auto;
   }
 
@@ -76,25 +76,16 @@ customElements.define('my-window',
         console.log('halllååå')
         this.remove()
       })
-      this.element.addEventListener('click', () => {
-        let x = this.id
-        console.log(x)
-        // this.shadowRoot
-        // .querySelector('#mydiv')
-        // .querySelector('#content')
-        // .querySelector('my-memory')
-        // .shadowRoot
-        // .querySelector('#grid')
-        // .querySelector('my-card')
-        // .setAttribute('activediv', this.id)
-      })
     }
 
     /**
      * Removes eventlistener.
      */
     disconnectedCallback () {
-
+      this.closeBtn.removeEventListener('click', () => {
+        console.log('halllååå')
+        this.remove()
+      })
     }
 
     remove() {
@@ -104,13 +95,13 @@ customElements.define('my-window',
 
     dragElement (elmnt) {
       // code credit --> https://www.w3schools.com/howto/howto_js_draggable.asp
-      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-      if (document.getElementById(elmnt.id + 'header')) {
+      console.log(this.shadowRoot.querySelector(`#${elmnt.id}header`))
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
+      if (this.shadowRoot.querySelector(`#${elmnt.id}header`)) {
         // if present, the header is where you move the DIV from:
-        document.getElementById(elmnt.id + 'header').onmousedown = dragMouseDown
+        this.shadowRoot.querySelector(`#${elmnt.id}header`).onmousedown = dragMouseDown
       } else {
-        // otherwise, move the DIV from anywhere inside the DIV:
-        elmnt.onmousedown = dragMouseDown
+        console.log(`#${elmnt.id}header`)
       }
       function dragMouseDown(e) {
         e = e || window.event

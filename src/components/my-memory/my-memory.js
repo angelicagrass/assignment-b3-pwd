@@ -152,6 +152,8 @@ customElements.define('my-memory',
       this.arrayOfImages()
     }
 
+    
+
     startGameTable() {
       this.container.style.visibility = "visible"
       this.btnContainer.style.visibility = "hidden"

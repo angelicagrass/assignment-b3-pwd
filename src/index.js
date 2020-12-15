@@ -7,4 +7,5 @@
 
 import './components/desktop-window/desktop-window.js'
 import './components/my-memory/my-memory.js'
+import './components/my-chat/my-chat.js'
 

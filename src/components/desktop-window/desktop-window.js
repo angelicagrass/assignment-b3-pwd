@@ -93,12 +93,18 @@ customElements.define('desktop-window',
       this.chatBtn.addEventListener('click', () => {
         console.log('chaaaaaat')
         let x = document.createElement('my-window')
+        let chat = document.createElement('my-chat')
         this.windowContainer.appendChild(x)
+
+        let y = x.shadowRoot.querySelector('#content')
+        y.appendChild(chat)
       })
       this.customBtn.addEventListener('click', () => {
         console.log('custom')
         let x = document.createElement('my-window')
         this.windowContainer.appendChild(x)
+
+        
 
       })
     }
