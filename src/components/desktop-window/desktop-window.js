@@ -1,4 +1,5 @@
 import '../my-window/my-window.js'
+import '../my-memory/my-memory.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -75,13 +76,24 @@ customElements.define('desktop-window',
       this.memoryBtn.addEventListener('click', () => {
         console.log('memoryyyy')
         let x = document.createElement('my-window')
+        let memory = document.createElement('my-memory')
+
         this.windowContainer.appendChild(x)
+        // let y = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector
+        // ('#content')
+
+        let y = x.shadowRoot.querySelector('#content')
+        y.appendChild(memory)
       })
       this.chatBtn.addEventListener('click', () => {
         console.log('chaaaaaat')
+        let x = document.createElement('my-window')
+        this.windowContainer.appendChild(x)
       })
       this.customBtn.addEventListener('click', () => {
         console.log('custom')
+        let x = document.createElement('my-window')
+        this.windowContainer.appendChild(x)
       })
     }
 

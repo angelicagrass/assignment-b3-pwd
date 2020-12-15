@@ -1,0 +1,153 @@
+const template = document.createElement('template')
+template.innerHTML = ` 
+<div id="theCard">
+  <div  id="flip-card-inner">
+    <div id="front"> 
+      <img id="firstpic" src="./img/0.png" alt="LNU">  
+    </div>
+   <div id="back">
+    <img class="mariopic" >     
+   </div>
+  </div>  
+</div>
+
+<style>
+
+    #theCard {
+      background-color: transparent;
+      width: 200px;
+      height: 200px;
+      /* border: 1px solid #f1f1f1; */
+      perspective: 1000px;
+    }
+
+    #flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .selected #flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    #front, #back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden; /* Safari */
+      backface-visibility: hidden;
+    }
+
+    #back {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 10px 10px 30px grey;
+        transform: rotateY(180deg);   
+    }
+
+    #back img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #front {
+        background-color: yellow;
+        border-radius: 10px;
+        box-shadow: 10px 10px 30px grey;
+    }
+</style>
+`
+
+customElements.define('my-card',
+  class extends HTMLElement {
+    constructor() {
+      super()
+
+      this.attachShadow({ mode: 'open' })
+        .appendChild(template.content.cloneNode(true))
+
+      this.theCard = this.shadowRoot.querySelector('#theCard')
+      this.memoryCard = this.shadowRoot.querySelector('.flipcount')
+      this.backImg = this.shadowRoot.querySelector('#back')
+      this.frontImg = this.shadowRoot.querySelector('#front')
+      this.flipCard = this.flipCard.bind(this)
+      this.unflipCards = this.unflipCards.bind(this)
+
+      this.firstCard = true
+      this.secondCard = false
+      this.cards = []
+      this.y = []
+    }
+
+    static get observedAttributes () {
+      return ['makethemspin']
+    }
+
+    attributeChangedCallback (name, oldValue, newValue) {
+      if (name === 'makethemspin') {
+        console.log('makethemspin!')
+        this.unflipCards()
+      }
+    }
+
+    connectedCallback() {
+      // this.arrayOfImages()
+      this.theCard.addEventListener('click', () => {
+        this.theCard.classList.add('selected')
+      })
+    }
+
+    disconnectedCallback() {
+      this.theCard.removeEventListener('click', () => {
+        this.theCard.classList.add('selected')
+      })
+    }
+
+    unflipCards() {
+      setTimeout(() => {
+        // const cards = document.querySelector('my-memory').shadowRoot.querySelectorAll('my-card')
+
+        const cards = document.querySelector('desktop-window').shadowRoot.querySelector('my-window').shadowRoot.querySelector('#mydiv').querySelector('#content').querySelector('my-memory').shadowRoot.querySelectorAll('my-card')
+
+        cards.forEach((card) => {
+          card.shadowRoot.querySelector('#theCard').classList.remove('selected')
+        })
+      }, 1000)
+    }
+
+    flipCard() {
+      // this.classList.toggle('flip')
+    }
+
+    // arrayOfImages () {
+    //   const imgArray = []
+
+    //   imgArray.push(document.createElement('img'))
+    //   imgArray.push(document.createElement('img'))
+    //   imgArray.push(document.createElement('img'))
+
+    //   imgArray[0].setAttribute('alt', 'princess')
+    //   imgArray[0].setAttribute('src', 'princesspink.jpg')
+
+    //   imgArray[1].setAttribute('alt', 'mario')
+    //   imgArray[1].setAttribute('src', 'mario.jpg')
+
+    //   imgArray[2].setAttribute('alt', 'bowser')
+    //   imgArray[2].setAttribute('src', 'bowser.jpg')
+
+    //   const memoryTable = document.querySelector('.grid')
+    // //   let memoryCard = .createElement('my-card')
+
+    //   for(let i = 0; i < imgArray.length; i++) {
+    //     let memoryCard = document.createElement('img')
+    //     memoryTable.appendChild(memoryCard)
+    //   }
+    // }
+    // create custom element for each picture
+  })
