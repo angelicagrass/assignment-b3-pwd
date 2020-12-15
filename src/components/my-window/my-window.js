@@ -76,8 +76,18 @@ customElements.define('my-window',
         console.log('halllååå')
         this.remove()
       })
-
-
+      this.element.addEventListener('click', () => {
+        let x = this.id
+        console.log(x)
+        // this.shadowRoot
+        // .querySelector('#mydiv')
+        // .querySelector('#content')
+        // .querySelector('my-memory')
+        // .shadowRoot
+        // .querySelector('#grid')
+        // .querySelector('my-card')
+        // .setAttribute('activediv', this.id)
+      })
     }
 
     /**

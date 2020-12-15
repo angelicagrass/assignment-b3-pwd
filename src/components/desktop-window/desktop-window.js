@@ -70,13 +70,18 @@ customElements.define('desktop-window',
       this.chatBtn = this.shadowRoot.querySelector('#chat')
       this.customBtn = this.shadowRoot.querySelector('#custom')
       this.windowContainer = this.shadowRoot.querySelector('#windowcontainer')
+      this.idCounter = 0
     }
 
     connectedCallback () {
       this.memoryBtn.addEventListener('click', () => {
+        this.idCounter++
+
         console.log('memoryyyy')
         let x = document.createElement('my-window')
         let memory = document.createElement('my-memory')
+        x.id = 'memory' + this.idCounter
+        console.log(x.id)
 
         this.windowContainer.appendChild(x)
         // let y = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector
@@ -94,6 +99,7 @@ customElements.define('desktop-window',
         console.log('custom')
         let x = document.createElement('my-window')
         this.windowContainer.appendChild(x)
+
       })
     }
 

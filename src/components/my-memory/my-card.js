@@ -83,16 +83,21 @@ customElements.define('my-card',
       this.secondCard = false
       this.cards = []
       this.y = []
+      this.currentid
     }
 
-    static get observedAttributes () {
-      return ['makethemspin']
+    static get observedAttributes() {
+      return ['makethemspin', 'activediv']
     }
 
-    attributeChangedCallback (name, oldValue, newValue) {
+    attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'makethemspin') {
         console.log('makethemspin!')
         this.unflipCards()
+      }
+      if (name === 'activediv') {
+        this.currentid = newValue
+        console.log(newValue)
       }
     }
 
@@ -100,6 +105,8 @@ customElements.define('my-card',
       // this.arrayOfImages()
       this.theCard.addEventListener('click', () => {
         this.theCard.classList.add('selected')
+        this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
+        console.log('här ovanför')
       })
     }
 
@@ -113,7 +120,27 @@ customElements.define('my-card',
       setTimeout(() => {
         // const cards = document.querySelector('my-memory').shadowRoot.querySelectorAll('my-card')
 
-        const cards = document.querySelector('desktop-window').shadowRoot.querySelector('my-window').shadowRoot.querySelector('#mydiv').querySelector('#content').querySelector('my-memory').shadowRoot.querySelectorAll('my-card')
+        // const cards = document.querySelector('desktop-window')
+        //   .shadowRoot
+        //   .querySelector('#windowcontainer')
+        //   .querySelector('my-window')
+        //   .shadowRoot.querySelector('#mydiv')
+        //   .querySelector('#content')
+        //   .querySelector('my-memory')
+        //   .shadowRoot
+        //   .querySelectorAll('my-card')
+
+        const cards = document.querySelector('desktop-window')
+          .shadowRoot
+          .querySelector('#windowcontainer').querySelector(`#${this.currentid}`)
+          .shadowRoot.querySelector('#mydiv')
+          .querySelector('#content')
+          .querySelector('my-memory')
+          .shadowRoot
+          .querySelectorAll('my-card')
+
+
+        console.log(cards)
 
         cards.forEach((card) => {
           card.shadowRoot.querySelector('#theCard').classList.remove('selected')
@@ -124,30 +151,4 @@ customElements.define('my-card',
     flipCard() {
       // this.classList.toggle('flip')
     }
-
-    // arrayOfImages () {
-    //   const imgArray = []
-
-    //   imgArray.push(document.createElement('img'))
-    //   imgArray.push(document.createElement('img'))
-    //   imgArray.push(document.createElement('img'))
-
-    //   imgArray[0].setAttribute('alt', 'princess')
-    //   imgArray[0].setAttribute('src', 'princesspink.jpg')
-
-    //   imgArray[1].setAttribute('alt', 'mario')
-    //   imgArray[1].setAttribute('src', 'mario.jpg')
-
-    //   imgArray[2].setAttribute('alt', 'bowser')
-    //   imgArray[2].setAttribute('src', 'bowser.jpg')
-
-    //   const memoryTable = document.querySelector('.grid')
-    // //   let memoryCard = .createElement('my-card')
-
-    //   for(let i = 0; i < imgArray.length; i++) {
-    //     let memoryCard = document.createElement('img')
-    //     memoryTable.appendChild(memoryCard)
-    //   }
-    // }
-    // create custom element for each picture
   })

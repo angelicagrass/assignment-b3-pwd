@@ -2,7 +2,7 @@ import './my-card.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
-<div id="center">
+
 
   <div id="scorecontainer">
     <h2 id="scoretext"></h2>
@@ -20,15 +20,15 @@ template.innerHTML = `
   <button id="fourxtwo" class="sizebutton">4x2</button>
   <button id="twoxtwo" class="sizebutton">2x2</button>
 </div>
-</div>
+
 
 <style>
 
-#center {
 
 
 
-}
+
+
 
 #scorecontainer {
   margin-top: 80px;
@@ -111,7 +111,7 @@ customElements.define('my-memory',
       this.headerText = this.shadowRoot.querySelector('#scoretext')
       this.smallBoard = false
       this.howManyCards =
-        this.flippedCardsNumber = []
+      this.flippedCardsNumber = []
       this.currentAttempts = 0
       this.wincounter
     }
@@ -136,6 +136,7 @@ customElements.define('my-memory',
       })
       this.fourXtwoBtn.addEventListener('click', () => {
         this.howManyCards = 4
+        this.wincounter = 4
         this.arrayOfImages()
         this.startGameTable()
       })
@@ -154,25 +155,28 @@ customElements.define('my-memory',
     startGameTable() {
       this.container.style.visibility = "visible"
       this.btnContainer.style.visibility = "hidden"
-      this.headerText.textContent = "NUMBER OF ATTEMPTS "
+      this.headerText.textContent = 'NUMBER OF ATTEMPTS '
       this.scoreText.textContent = this.currentAttempts
-
     }
 
     compareCards() {
       if (this.flippedCardsNumber.length === 2) {
         if (this.flippedCardsNumber[0] === this.flippedCardsNumber[1]) {
           this.wincounter--
+          console.log(this.wincounter)
+
+          if (this.wincounter === 0) {
+            this.winner.textContent = 'WINNER'
+          }
 
           let cardToHide
 
           if (this.smallBoard === true) {
             cardToHide = this.shadowRoot.querySelector('#grid2').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
-            if (this.wincounter === 0) {
-              this.winner.textContent = 'WINNER'
-            }
+
           } else {
             cardToHide = this.shadowRoot.querySelector('#grid').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
+
           }
           this.flippedCardsNumber = []
           this.currentAttempts++
