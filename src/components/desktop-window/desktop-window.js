@@ -1,6 +1,9 @@
+import '../my-window/my-window.js'
+
 const template = document.createElement('template')
 template.innerHTML = `
 <div id="pwdapp"></div>
+<div id="windowcontainer"></div>
 <footer>
   <button id="memory"></button>
   <button id="chat"></button>
@@ -60,19 +63,25 @@ customElements.define('desktop-window',
       super()
 
       this.attachShadow({ mode: 'open' })
-      .appendChild(template.content.cloneNode(true))
+        .appendChild(template.content.cloneNode(true))
 
       this.memoryBtn = this.shadowRoot.querySelector('#memory')
       this.chatBtn = this.shadowRoot.querySelector('#chat')
-      
+      this.customBtn = this.shadowRoot.querySelector('#custom')
+      this.windowContainer = this.shadowRoot.querySelector('#windowcontainer')
     }
 
     connectedCallback () {
       this.memoryBtn.addEventListener('click', () => {
         console.log('memoryyyy')
+        let x = document.createElement('my-window')
+        this.windowContainer.appendChild(x)
       })
       this.chatBtn.addEventListener('click', () => {
         console.log('chaaaaaat')
+      })
+      this.customBtn.addEventListener('click', () => {
+        console.log('custom')
       })
     }
 
