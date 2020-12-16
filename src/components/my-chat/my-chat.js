@@ -1,22 +1,77 @@
 const template = document.createElement('template')
-template.innerHTML = ` 
+template.innerHTML = `
+<div id="size"> 
 <ul id="chat"></ul>
 
 <form>
-  <textarea rows="8" cols="80" id="message"></textarea>
+  <textarea rows="8" cols="50" id="message"></textarea>
   <br />
   <button type="submit">Send</button>
+  <div id="messageUser"></div>
 </form>
+</div>
+
 
 
 <style>
+
+  #size {
+    width: 398px;
+    height: 643px;
+  }
   #chat {
     list-style-type: none;
   }
-  
 
+  form {
+    position: absolute;
+    bottom: 10px;
 
-  
+  }
+
+  /* #messageUser {
+  border-radius: 6px 0 6px 0;
+  background: rgba(100, 170, 0, .1);
+  border: 2px solid rgba(100, 170, 0, .1);
+    border-radius: 5px;
+    box-shadow: 0 0 6px #B2B2B2;
+    display: inline-block;
+    padding: 10px 18px;
+    position: relative;
+    vertical-align: top;
+  } */
+
+  ul {
+    display: block;
+    width: 400px;
+    padding: 0;
+    list-style-type: none;
+    position: absolute;
+    bottom: 140px;
+
+  }
+
+  li {
+    float:left;
+    clear:left;
+    display: block;
+    border-radius: 6px 0 6px 0;
+    background: rgba(100, 170, 0, .1);
+    border: 2px solid rgba(100, 170, 0, .1);
+    border-radius: 5px;
+    box-shadow: 0 0 6px #B2B2B2;
+    margin: 5px;
+    padding: 10px 18px;
+    /* position: relative; */
+    vertical-align: top;
+  }
+
+  #me {
+    background: #fadadd;
+    float: right;
+    clear: right;
+    
+  }
 </style>
 `
 
@@ -61,6 +116,12 @@ customElements.define('my-chat',
         let JSONObject = JSON.parse(data)
         let theText = JSONObject.data
         let theName = JSONObject.username
+
+        if(theName === 'KrigarAnka') {
+          console.log('JAAAA HEJSAN')
+          li.setAttribute('id', 'me')
+        }
+
         li.innerText = `${theName}: ${theText}`
         this.shadowRoot.querySelector('#chat').appendChild(li)
       })

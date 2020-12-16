@@ -3,7 +3,7 @@ import '../my-memory/my-memory.js'
 const template = document.createElement('template')
 template.innerHTML = `
 <div id="mydiv">
-<div id="mydivheader">click here to move<button id="close"></button></div>
+<div id="mydivheader">Window<button id="close"></button></div>
 <div id="content"></div>
   
 </div>
@@ -25,7 +25,8 @@ template.innerHTML = `
     /* position: absolute; */
     position: absolute;
     resize: both;
-    overflow: auto;
+    overflow: scroll;
+
   }
 
   #mydivheader {
@@ -34,6 +35,7 @@ template.innerHTML = `
     z-index: 10;
     background-color: #413D3D;
     color: #fff;
+
   }
 
   #close {
@@ -50,6 +52,7 @@ template.innerHTML = `
   #content {
     margin-left: auto;
     margin-right: auto;
+    overflow: auto;
 
   padding: 20px;
   }
