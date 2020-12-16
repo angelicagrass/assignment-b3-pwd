@@ -46,9 +46,7 @@ customElements.define('my-chat',
     disconnectedCallback() {
       this.wsConnect()
       this.form.addEventListener('click', () => {
-
       })
-
     }
 
     wsConnect() {
@@ -60,12 +58,9 @@ customElements.define('my-chat',
       ws.addEventListener('message', ({ data }) => {
         console.log(data)
         let li = document.createElement('li')
-
         let JSONObject = JSON.parse(data)
-
         let theText = JSONObject.data
         let theName = JSONObject.username
-
         li.innerText = `${theName}: ${theText}`
         this.shadowRoot.querySelector('#chat').appendChild(li)
       })
@@ -73,9 +68,7 @@ customElements.define('my-chat',
       this.shadowRoot.querySelector('form').addEventListener('submit', event => {
         event.preventDefault()
         let myMessage = this.shadowRoot.querySelector('#message').value
-
         this.chatMessage(myMessage)
-
         ws.send(this.message)
         this.shadowRoot.querySelector('#message').value = ''
       })

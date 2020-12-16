@@ -16,12 +16,13 @@ template.innerHTML = `
     height: min-content;
     width: min-content;
     border-radius: 3px;
-
+    /* z-index: 10;  */
     /* max-height: 1000px;
     max-width: 1000px; */
     background-color: white;
     opacity: 0.9;
     z-index: 9;
+    /* position: absolute; */
     position: absolute;
     resize: both;
     overflow: auto;
@@ -68,6 +69,7 @@ customElements.define('my-window',
       this.dragElement = this.dragElement.bind(this)
       this.remove = this.remove.bind(this)
       this.closeBtn = this.shadowRoot.querySelector('#close')
+      this.windowIndex = 10
     }
 
     connectedCallback () {
@@ -75,6 +77,11 @@ customElements.define('my-window',
       this.closeBtn.addEventListener('click', () => {
         console.log('halllååå')
         this.remove()
+      })
+      this.addEventListener('click', () => {
+        this.windowIndex++
+        console.log(this.windowIndex)
+        this.style.zIndex = this.windowIndex
       })
     }
 

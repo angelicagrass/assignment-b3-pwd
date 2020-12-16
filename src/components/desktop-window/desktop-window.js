@@ -17,11 +17,13 @@ template.innerHTML = `
     width: 100%;
     height: 100vh;
     background-color: grey;
-    background-image: url('./img/background1.jpg');
+    background-image: url('./img/smokebackground.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     overflow: hidden;
     position: relative;
+
+    z-index: 1;
     margin: 0;
     padding: 0;
   }
@@ -29,11 +31,15 @@ template.innerHTML = `
   footer {
     height: 70px;
     position: fixed;
+    z-index: 2;
     left: 0;
     bottom: 0;
-    width: 100%;
-    background-color: black;
-    opacity: 0.8;
+    right: 20%;
+    left: 20%;
+    width: 60%;
+    background: rgba(0,0,0,0.7);
+    border-radius: 10px 10px 0 0;
+    /* opacity: 0.8; */
     color: white; 
   }
 
