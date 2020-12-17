@@ -2,7 +2,9 @@ const template = document.createElement('template')
 template.innerHTML = `
 <div id="size"> 
 
-<ul id="chat"></ul>
+<ul id="chat">
+
+</ul>
 
 <form>
   <div id="chatten">
@@ -52,11 +54,14 @@ template.innerHTML = `
     bottom: 140px;
     top: 40px;
     overflow: scroll;
+    -webkit-transform: rotate(180deg);
   }
 
+  
+
   li {
-    float: left;
-    clear: both;
+    float: right;
+    clear: both; 
     display: block;
     border-radius: 6px 0 6px 0;
     background: rgba(100, 170, 0, .1);
@@ -66,15 +71,17 @@ template.innerHTML = `
     margin: 5px;
     padding: 10px 18px;
     word-break: break-all; 
+    -webkit-transform: rotate(180deg);
 
   }
 
   #me {
+    float: left;
+    clear: both;
     background: #fadadd;
     display: block;
-    float: right;
-    clear: both;  
     word-break: break-all;
+    -webkit-transform: rotate(180deg);
   }
 
 </style>
@@ -91,6 +98,7 @@ customElements.define('my-chat',
       this.wsConnect = this.wsConnect.bind(this)
       this.chatMessage = this.chatMessage.bind(this)
       this.saveToLocalStorage = this.saveToLocalStorage.bind(this)
+      this.chatStart = this.chatStart.bind(this)
       this.nameBtn = this.shadowRoot.querySelector('#namebtn')
       this.inputName = this.shadowRoot.querySelector('#usernamefield')
       this.form = this.shadowRoot.querySelector('form')
@@ -101,20 +109,19 @@ customElements.define('my-chat',
     }
 
     connectedCallback() {
-      this.chatcontainer.classList.add('hide')
+      this.chatStart()
 
       this.form.addEventListener('click', () => {
         this.form.focus()
       })
+
       this.nameBtn.addEventListener('click', (event) => {
         event.preventDefault()
-        // check localstorage
         this.userName = this.inputName.value
         this.chatcontainer.classList.remove('hide')
         this.shadowRoot.querySelector('#username').style.display = 'none'
 
         this.saveToLocalStorage()
-
         this.wsConnect()
       })
     }
@@ -123,6 +130,24 @@ customElements.define('my-chat',
       this.wsConnect()
       this.form.addEventListener('click', () => {
       })
+    }
+
+    chatStart () {
+      let existing = localStorage.getItem('usernames')
+
+      if (existing) {
+        existing = JSON.parse(existing)
+        console.log(existing.username)
+        this.userName = existing.username
+        this.chatcontainer.classList.remove('hide')
+        this.shadowRoot.querySelector('#username').style.display = 'none'
+        this.wsConnect()
+        // OM username finns
+      } else {
+        this.chatcontainer.classList.add('hide')
+        // OM username inte finns
+      }
+
     }
 
     saveToLocalStorage () {
@@ -148,9 +173,17 @@ customElements.define('my-chat',
         if (theName === `${this.userName}`) {
           li.setAttribute('id', 'me')
         }
+        // if (theName === 'Server') {
+        //   console.log('han hittar server')
+        // }
 
         li.innerText = `${theName}: ${theText}`
-        this.shadowRoot.querySelector('#chat').appendChild(li)
+        // this.shadowRoot.querySelector('#chat').appendChild(li)
+        let el = this.shadowRoot.querySelector('#chat')
+        el.insertBefore(li, el.firstChild)
+        
+
+
       })
 
       this.shadowRoot.querySelector('form').addEventListener('submit', event => {
