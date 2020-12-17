@@ -8,7 +8,7 @@ template.innerHTML = `
 <footer>
   <button id="memory"></button>
   <button id="chat"></button>
-  <button id="custom">mitt eget</button>
+  <button id="custom"></button>
 </footer>
 
 
@@ -34,6 +34,7 @@ template.innerHTML = `
     z-index: 2;
     left: 0;
     bottom: 0;
+    padding-bottom: 4px;
     right: 20%;
     left: 20%;
     width: 60%;
@@ -43,7 +44,7 @@ template.innerHTML = `
     color: white; 
   }
 
-  #memory, #chat {
+  #memory, #chat, #custom {
     height: 60px;
     width: 60px;
     background-repeat: no-repeat;
@@ -54,11 +55,23 @@ template.innerHTML = `
   }
 
   #memory {
-    background: url('./img/memory.png');
+    background: url('./img/metalicon.png');
+    background-repeat: no-repeat;
+    margin: 12px 10px 0 20px;
+
   }
 
   #chat {
-    background: url('./img/chat.png');
+    background: url('./img/metaliconchat.png');
+    background-repeat: no-repeat;
+
+
+  }
+
+  #custom {
+    background: url('./img/metaliconchat.png');
+    background-repeat: no-repeat;
+    
   }
 
   </style>

@@ -15,6 +15,7 @@ template.innerHTML = `
 
 </div>
 <h2 id="winner"></h2>
+<h2 id="buttonheader">Choose the size of your game</h2>
 <div id="buttons">
   <button id="fourxfour" class="sizebutton">4x4</button>
   <button id="fourxtwo" class="sizebutton">4x2</button>
@@ -23,12 +24,6 @@ template.innerHTML = `
 
 
 <style>
-
-
-
-
-
-
 
 #scorecontainer {
   margin-top: 80px;
@@ -76,7 +71,7 @@ h2 {
  .sizebutton {
   padding: 32px 50px;
 	border-radius: 10px;
-	background-color: #ffc000;
+	background-color: rgba(100, 170, 0, .1);
 	font-weight: 100;
 	font-size: larger;
 	transition-duration: 0.4s;
@@ -109,6 +104,7 @@ customElements.define('my-memory',
       this.twoXtwoBtn = this.shadowRoot.querySelector('#twoxtwo')
       this.btnContainer = this.shadowRoot.querySelector('#buttons')
       this.headerText = this.shadowRoot.querySelector('#scoretext')
+      this.btnHeader = this.shadowRoot.querySelector('#buttonheader')
       this.smallBoard = false
       this.howManyCards =
       this.flippedCardsNumber = []
@@ -152,11 +148,12 @@ customElements.define('my-memory',
       this.arrayOfImages()
     }
 
-    
+
 
     startGameTable() {
       this.container.style.visibility = "visible"
       this.btnContainer.style.visibility = "hidden"
+      this.btnHeader.style.visibility = 'hidden'
       this.headerText.textContent = 'NUMBER OF ATTEMPTS '
       this.scoreText.textContent = this.currentAttempts
     }
