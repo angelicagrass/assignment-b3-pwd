@@ -1,16 +1,28 @@
 const template = document.createElement('template')
 template.innerHTML = `
+
+
+
+
 <div id="size"> 
 
-<ul id="chat">
+
+
+  <!-- <label class="switch">
+  <input type="checkbox" id="mycheck">
+  <span class="slider round"></span>
+  </label> -->
+
+
+<ul id="chat" class="slidedark">
 
 </ul>
 
-<form>
+<form id ="colorchange" class="slidedark">
   <div id="chatten">
-  <textarea rows="8" cols="50" id="message"></textarea>
+  <textarea rows="8" cols="50" id="message" class="slidedark"></textarea>
   <br />
-  <button type="submit">Send</button>
+  <button id="send" type="submit">Send</button>
   <div id="messageUser"></div>
 </div>
 <div id="username">
@@ -19,6 +31,11 @@ template.innerHTML = `
   <input type="text" id="usernamefield" name="usernamefield"><br>
   <input id="namebtn" type="submit" value="Submit">
 </div>
+<label class="switch">
+  <input type="checkbox" id="mycheck">
+  <span class="slider round"></span>
+  </label>
+
 </form>
 
 </div>
@@ -26,6 +43,85 @@ template.innerHTML = `
 
 
 <style>
+  .darkmode {
+  background-color: #413D3D;
+}
+
+/* // src slidercode: */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  margin-top: 5px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* end of slide */
+
+#send {
+  float: right;
+  margin-top: 5px;
+}
+
+
 
   .hide {
     display: none;
@@ -51,7 +147,7 @@ template.innerHTML = `
     padding: 0;
     list-style-type: none;
     position: absolute;
-    bottom: 140px;
+    bottom: 150px;
     top: 40px;
     overflow: scroll;
     -webkit-transform: rotate(180deg);
@@ -72,7 +168,6 @@ template.innerHTML = `
     padding: 10px 18px;
     word-break: break-all; 
     -webkit-transform: rotate(180deg);
-
   }
 
   #me {
@@ -103,6 +198,8 @@ customElements.define('my-chat',
       this.inputName = this.shadowRoot.querySelector('#usernamefield')
       this.form = this.shadowRoot.querySelector('form')
       this.chatcontainer = this.shadowRoot.querySelector('#chatten')
+      this.slide = this.shadowRoot.querySelector('#mycheck')
+      this.allArea = this.shadowRoot.querySelectorAll('.slidedark')
       this.userName = ''
       this.zindex =
       this.message
@@ -110,9 +207,34 @@ customElements.define('my-chat',
 
     connectedCallback() {
       this.chatStart()
+      console.log(this.parentNode.parentNode)
 
       this.form.addEventListener('click', () => {
         this.form.focus()
+      })
+
+      this.slide.addEventListener('click', () => {
+        if (this.slide.checked === true) {
+          console.log('han hittar slidern')
+          // this.allArea.classList.add('darkmode')
+          console.log(this.allArea)
+          this.allArea.forEach(element => {
+            element.classList.add('darkmode')
+          })
+          let x = this.parentNode.parentNode
+          x.style.backgroundColor = 'black'
+        }
+
+        if (this.slide.checked !== true) {
+          console.log('han hittar slidern')
+          // this.allArea.classList.add('darkmode')
+          console.log(this.allArea)
+          this.allArea.forEach(element => {
+            element.classList.remove('darkmode')
+          })
+          let x = this.parentNode.parentNode
+          x.style.backgroundColor = 'white'
+        }
       })
 
       this.nameBtn.addEventListener('click', (event) => {
