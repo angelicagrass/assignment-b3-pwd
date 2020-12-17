@@ -20,7 +20,7 @@ template.innerHTML = `
     /* max-height: 1000px;
     max-width: 1000px; */
     background-color: white;
-    opacity: 0.9;
+    opacity: 0.99;
     z-index: 9;
     /* position: absolute; */
     position: absolute;

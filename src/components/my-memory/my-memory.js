@@ -26,8 +26,8 @@ template.innerHTML = `
 <style>
 
 #scorecontainer {
-  margin-top: 80px;
-  margin-bottom: 49px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   }
 
 
@@ -152,7 +152,7 @@ customElements.define('my-memory',
 
     startGameTable() {
       this.container.style.visibility = "visible"
-      this.btnContainer.style.visibility = "hidden"
+      this.btnContainer.style.display = "none"
       this.btnHeader.style.visibility = 'hidden'
       this.headerText.textContent = 'NUMBER OF ATTEMPTS '
       this.scoreText.textContent = this.currentAttempts

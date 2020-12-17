@@ -4,7 +4,6 @@ template.innerHTML = `
 
 <ul id="chat"></ul>
 
-
 <form>
   <div id="chatten">
   <textarea rows="8" cols="50" id="message"></textarea>
@@ -13,6 +12,7 @@ template.innerHTML = `
   <div id="messageUser"></div>
 </div>
 <div id="username">
+  <p>Enter your username to start the chat</p>
   <label for="username">Username: </label>
   <input type="text" id="usernamefield" name="usernamefield"><br>
   <input id="namebtn" type="submit" value="Submit">
@@ -40,8 +40,6 @@ template.innerHTML = `
   form {
     position: absolute;
     bottom: 10px;
-
-
   }
 
   ul {
@@ -92,7 +90,7 @@ customElements.define('my-chat',
 
       this.wsConnect = this.wsConnect.bind(this)
       this.chatMessage = this.chatMessage.bind(this)
-      this.enterUserName = this.enterUserName.bind(this)
+      this.saveToLocalStorage = this.saveToLocalStorage.bind(this)
       this.nameBtn = this.shadowRoot.querySelector('#namebtn')
       this.inputName = this.shadowRoot.querySelector('#usernamefield')
       this.form = this.shadowRoot.querySelector('form')
@@ -110,12 +108,13 @@ customElements.define('my-chat',
       })
       this.nameBtn.addEventListener('click', (event) => {
         event.preventDefault()
-        console.log(event.target.value)
-        console.log(this.inputName.value)
+        // check localstorage
         this.userName = this.inputName.value
-
         this.chatcontainer.classList.remove('hide')
         this.shadowRoot.querySelector('#username').style.display = 'none'
+
+        this.saveToLocalStorage()
+
         this.wsConnect()
       })
     }
@@ -126,10 +125,11 @@ customElements.define('my-chat',
       })
     }
 
-    enterUserName () {
-
-
-
+    saveToLocalStorage () {
+      const nameObj = {
+        username: this.userName
+      }
+      window.localStorage.setItem('usernames', JSON.stringify(nameObj))
     }
 
     wsConnect() {
@@ -140,13 +140,12 @@ customElements.define('my-chat',
 
       ws.addEventListener('message', ({ data }) => {
         console.log(data)
-        let li = document.createElement('li')
-        let JSONObject = JSON.parse(data)
-        let theText = JSONObject.data
-        let theName = JSONObject.username
+        const li = document.createElement('li')
+        const JSONObject = JSON.parse(data)
+        const theText = JSONObject.data
+        const theName = JSONObject.username
 
-        if(theName === `${this.userName}`) {
-          console.log('JAAAA HEJSAN')
+        if (theName === `${this.userName}`) {
           li.setAttribute('id', 'me')
         }
 
@@ -156,7 +155,7 @@ customElements.define('my-chat',
 
       this.shadowRoot.querySelector('form').addEventListener('submit', event => {
         event.preventDefault()
-        let myMessage = this.shadowRoot.querySelector('#message').value
+        const myMessage = this.shadowRoot.querySelector('#message').value
         this.chatMessage(myMessage)
         ws.send(this.message)
         this.shadowRoot.querySelector('#message').value = ''
@@ -164,18 +163,14 @@ customElements.define('my-chat',
     }
 
     chatMessage(myMessage) {
-
-      console.log()
-
-      let myObjectToSend = {
+      const myObjectToSend = {
         type: 'message',
         data: `${myMessage}`,
         username: `${this.userName}`,
         channel: 'my, not so secret, channel',
         key: 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
       }
-
-      let json = JSON.stringify(myObjectToSend)
+      const json = JSON.stringify(myObjectToSend)
       this.message = json
     }
   })
