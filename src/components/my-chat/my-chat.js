@@ -18,23 +18,25 @@ template.innerHTML = `
 
 </ul>
 
-<form id ="colorchange" class="slidedark">
+<form id ="colorchange">
   <div id="chatten">
-  <textarea rows="8" cols="50" id="message" class="slidedark"></textarea>
+    <textarea rows="8" cols="50" id="message" class="slidedark"></textarea>
   <br />
-  <button id="send" type="submit">Send</button>
+    <button id="send" type="submit">SEND</button>
   <div id="messageUser"></div>
 </div>
+
 <div id="username">
   <p>Enter your username to start the chat</p>
-  <label for="username">Username: </label>
-  <input type="text" id="usernamefield" name="usernamefield"><br>
-  <input id="namebtn" type="submit" value="Submit">
+    <label for="username">Username: </label>
+      <input type="text" id="usernamefield" name="usernamefield"><br>
+    <input id="namebtn" type="submit" value="Submit">
 </div>
+
 <label class="switch">
   <input type="checkbox" id="mycheck">
-  <span class="slider round"></span>
-  </label>
+    <span class="slider round"></span>
+</label>
 
 </form>
 
@@ -45,6 +47,12 @@ template.innerHTML = `
 <style>
   .darkmode {
   background-color: #413D3D;
+}
+
+#message.darkmode {
+  color: #A9CBA6;
+  font-weight: 500;
+
 }
 
 /* // src slidercode: */
@@ -119,6 +127,7 @@ input:checked + .slider:before {
 #send {
   float: right;
   margin-top: 5px;
+  margin-right: 5px;
 }
 
 
@@ -138,12 +147,13 @@ input:checked + .slider:before {
   form {
     position: absolute;
     bottom: 10px;
+    width: 400px;
   }
 
   ul {
     max-height: 650px;
     display: block;
-    width: 400px;
+    width: 396px;
     padding: 0;
     list-style-type: none;
     position: absolute;
@@ -160,8 +170,8 @@ input:checked + .slider:before {
     clear: both; 
     display: block;
     border-radius: 6px 0 6px 0;
-    background: rgba(100, 170, 0, .1);
-    border: 2px solid rgba(100, 170, 0, .1);
+    background: #7EBEA3;
+    /* border: 2px solid #7EBEA3; */
     border-radius: 5px;
     box-shadow: 0 0 6px #B2B2B2;
     margin: 5px;
@@ -173,10 +183,23 @@ input:checked + .slider:before {
   #me {
     float: left;
     clear: both;
-    background: #fadadd;
+    background: #A9CBA6;
     display: block;
     word-break: break-all;
     -webkit-transform: rotate(180deg);
+  }
+
+  #send {
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    background: #7EBEA3;
+    border: none;
+    border-bottom: 4px solid #53A08E;
+    width: 80px;
+    height: 34px;
+    border-radius: 3px;
+
   }
 
 </style>
@@ -222,7 +245,7 @@ customElements.define('my-chat',
             element.classList.add('darkmode')
           })
           let x = this.parentNode.parentNode
-          x.style.backgroundColor = 'black'
+          x.style.backgroundColor = '#2c2a2a'
         }
 
         if (this.slide.checked !== true) {

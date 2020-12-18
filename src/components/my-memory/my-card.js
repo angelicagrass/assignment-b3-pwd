@@ -57,7 +57,7 @@ template.innerHTML = `
     }
 
     #front {
-        background-color: rgba(100, 170, 0, .1);
+        background-color: #53A08E;
         border-radius: 10px;
         box-shadow: 10px 10px 30px grey;
     }

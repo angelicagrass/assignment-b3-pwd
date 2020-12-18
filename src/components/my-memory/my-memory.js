@@ -14,8 +14,13 @@ template.innerHTML = `
   
 
 </div>
-<h2 id="winner"></h2>
-<h2 id="buttonheader">Choose the size of your game</h2>
+
+<div id="centertext">
+  <h2 id="winner"></h2>
+  <h2 id="buttonheader">Choose the size of your game</h2>
+</div>
+
+
 <div id="buttons">
   <button id="fourxfour" class="sizebutton">4x4</button>
   <button id="fourxtwo" class="sizebutton">4x2</button>
@@ -24,6 +29,12 @@ template.innerHTML = `
 
 
 <style>
+
+#centertext {
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
 
 #scorecontainer {
   margin-top: 30px;
@@ -71,8 +82,11 @@ h2 {
  .sizebutton {
   padding: 32px 50px;
 	border-radius: 10px;
-	background-color: rgba(100, 170, 0, .1);
-	font-weight: 100;
+	background-color: #7EBEA3;
+  font-weight: 600;
+  border: none;
+  border-bottom: 4px solid #53A08E;
+  color: white;
 	font-size: larger;
 	transition-duration: 0.4s;
   margin: 20px;
