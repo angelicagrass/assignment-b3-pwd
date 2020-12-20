@@ -2,7 +2,8 @@ const template = document.createElement('template')
 template.innerHTML = ` 
 <div id="mycontainer">
 <div id="textintro">
-<h2>Här ska det va vara en massa text, lite presentation så folk fattar vad dom ska göra.</h2>
+<h2 id="starttext">Här ska det va vara en massa text, lite presentation så folk fattar vad dom ska göra.</h2>
+<h2 id="quotetext" class="hide">test</h2>
 
 </div>
   <div id="buttoncontainer">
@@ -68,8 +69,12 @@ customElements.define('my-own',
       this.quoteBtn = this.shadowRoot.querySelector('#getquote')
       this.meanBtn = this.shadowRoot.querySelector('#getmeanquote')
       this.btnContainer = this.shadowRoot.querySelector('#buttoncontainer')
+      this.startText = this.shadowRoot.querySelector('#starttext')
+      this.quoteText = this.shadowRoot.querySelector('#quotetext')
       this.funnyQuotes = this.funnyQuotes.bind(this)
       this.meanQuotes = this.meanQuotes.bind(this)
+      this.quotesOnScreen = this.quotesOnScreen.bind(this)
+      this.currentQuote = ''
     }
 
     connectedCallback() {
@@ -82,24 +87,28 @@ customElements.define('my-own',
       })
     }
 
-    funnyQuotes() {
+    async funnyQuotes() {
       this.btnContainer.classList.add('hide')
-      let quotesArray = []
 
-      fetch("https://type.fit/api/quotes")
-        .then(function (response) {
-          return response.json()
-        })
-        .then(function (data) {
-          quotesArray = data
+      let result = await fetch("https://type.fit/api/quotes")
+      result = await result.json()
 
-          const random = Math.floor(Math.random() * quotesArray.length)
-          console.log(random, quotesArray[random].text)
-          // console.log(quotesArray[1])
-        })
+      const random = Math.floor(Math.random() * result.length)
+
+      this.currentQuote = result[random].text
+
+      console.log(this.currentQuote)
+       
     }
 
     meanQuotes() {
+
+    }
+
+
+    quotesOnScreen(quote) {
+      console.log('we are on screen')
+
 
     }
 

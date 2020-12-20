@@ -35,7 +35,6 @@ template.innerHTML = `
     /* z-index: 10; */
     background-color: #413D3D;
     color: #fff;
-
   }
 
   #close {
