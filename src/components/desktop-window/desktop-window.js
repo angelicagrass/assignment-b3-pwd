@@ -13,6 +13,9 @@ template.innerHTML = `
 
 
 <style>
+  /* #windowcontainer {
+    position: static;
+  } */
   #pwdapp {
     width: 100%;
     height: 100vh;
@@ -127,10 +130,19 @@ customElements.define('desktop-window',
         this.windowContainer.appendChild(x)
         let y = x.shadowRoot.querySelector('#content')
         y.appendChild(myApp)
+      })
 
+      this.windowContainer.addEventListener('click', (event) => {
+        let y = this.shadowRoot.querySelectorAll('my-window')
 
-        
+        y.forEach(element => {
+          element.style.zIndex = '10'
+          console.log(y)
+        })
+        let x = event.target
+        x.style.zIndex = '100'
 
+        console.log(event.target)
       })
     }
 

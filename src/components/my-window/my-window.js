@@ -16,6 +16,7 @@ template.innerHTML = `
     height: min-content;
     width: min-content;
     border-radius: 3px;
+    border: solid 1px #e2e2e2;
     /* z-index: 10;  */
     /* max-height: 1000px;
     max-width: 1000px; */
@@ -26,13 +27,12 @@ template.innerHTML = `
     position: absolute;
     resize: both;
     overflow: scroll;
-
   }
 
   #mydivheader {
     padding: 10px;
     cursor: move;
-    z-index: 10;
+    /* z-index: 10; */
     background-color: #413D3D;
     color: #fff;
 
@@ -53,8 +53,7 @@ template.innerHTML = `
     margin-left: auto;
     margin-right: auto;
     overflow: auto;
-
-  padding: 20px;
+    padding: 20px;
   }
 
   </style>
@@ -72,7 +71,6 @@ customElements.define('my-window',
       this.dragElement = this.dragElement.bind(this)
       this.remove = this.remove.bind(this)
       this.closeBtn = this.shadowRoot.querySelector('#close')
-      this.windowIndex = 10
     }
 
     connectedCallback () {
@@ -81,11 +79,7 @@ customElements.define('my-window',
         console.log('halllååå')
         this.remove()
       })
-      this.addEventListener('click', () => {
-        this.windowIndex++
-        console.log(this.windowIndex)
-        this.style.zIndex = this.windowIndex
-      })
+
     }
 
     /**

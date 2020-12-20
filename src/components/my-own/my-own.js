@@ -14,11 +14,15 @@ template.innerHTML = `
 
 <style>
 
+.hide {
+  display: none;
+}
+
   #mycontainer {
     text-align: center;
-
-
-
+  }
+  #buttoncontainer {
+    margin-top: 60%;
   }
 
   #getquote, #getmeanquote {
@@ -61,14 +65,41 @@ customElements.define('my-own',
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
 
-        this.quoteBtn = this.shadowRoot.querySelector('#getquote')
+      this.quoteBtn = this.shadowRoot.querySelector('#getquote')
+      this.meanBtn = this.shadowRoot.querySelector('#getmeanquote')
+      this.btnContainer = this.shadowRoot.querySelector('#buttoncontainer')
+      this.funnyQuotes = this.funnyQuotes.bind(this)
+      this.meanQuotes = this.meanQuotes.bind(this)
     }
 
     connectedCallback() {
       this.quoteBtn.addEventListener('click', () => {
         console.log('hallå')
-
+        this.funnyQuotes()
       })
+      this.meanBtn.addEventListener('click', () => {
+        console.log('mean btn')
+      })
+    }
+
+    funnyQuotes() {
+      this.btnContainer.classList.add('hide')
+      let quotesArray = []
+
+      fetch("https://type.fit/api/quotes")
+        .then(function (response) {
+          return response.json()
+        })
+        .then(function (data) {
+          quotesArray = data
+
+          const random = Math.floor(Math.random() * quotesArray.length)
+          console.log(random, quotesArray[random].text)
+          // console.log(quotesArray[1])
+        })
+    }
+
+    meanQuotes() {
 
     }
 
