@@ -40,7 +40,8 @@ template.innerHTML = `
     }
 
   .iconbtn:hover {
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
+    transform: translateY(-5px);
     }
 
   footer {
