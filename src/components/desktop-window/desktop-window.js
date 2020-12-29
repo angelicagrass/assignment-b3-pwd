@@ -32,8 +32,6 @@ template.innerHTML = `
 
   /* test */
 
-
-
   .iconbtn {
     transition: all .2s ease-in-out;
     }
@@ -113,7 +111,10 @@ customElements.define('desktop-window',
       this.idCounter = 0
     }
 
-    connectedCallback() {
+    /**
+     * Called when the custom element is inserted in the DOM.
+     */
+    connectedCallback () {
       this.memoryBtn.addEventListener('click', () => {
         this.createMemoryWindow()
       })
@@ -131,7 +132,7 @@ customElements.define('desktop-window',
     /**
      * Removes eventlistener.
      */
-    disconnectedCallback() {
+    disconnectedCallback () {
       this.memoryBtn.addEventListener('click', () => {
         this.createMemoryWindow()
       })
@@ -146,6 +147,10 @@ customElements.define('desktop-window',
       })
     }
 
+    /**
+     * Creates window with memory game.
+     *
+     */
     createMemoryWindow() {
       this.idCounter++
       let x = document.createElement('my-window')
@@ -159,6 +164,10 @@ customElements.define('desktop-window',
       y.style.minHeight = '700px'
     }
 
+    /**
+     * Creates window with chat.
+     *
+     */
     createChatWindow() {
       let x = document.createElement('my-window')
       let chat = document.createElement('my-chat')
@@ -167,6 +176,10 @@ customElements.define('desktop-window',
       y.appendChild(chat)
     }
 
+    /**
+     * Creates window with quote-app.
+     *
+     */
     createMyOwnApp() {
       let myApp = document.createElement('my-own')
       let x = document.createElement('my-window')
