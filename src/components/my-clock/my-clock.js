@@ -6,18 +6,16 @@ template.innerHTML = `
 
 
 <style>
-
 .clock {
     position: absolute;
     top: 50%;
     right: 1%;
     transform: translateX(-50%) translateY(-50%);
     color: white;
-    font-size: 20px;
+    font-size: 15px;
     /* font-family: Orbitron; */
     letter-spacing: 7px;
 }
-
 
 </style>
 `
@@ -31,11 +29,9 @@ customElements.define('my-clock',
         .appendChild(template.content.cloneNode(true))
 
       this.showTime = this.showTime.bind(this)
-
     }
 
     connectedCallback() {
-
       this.showTime()
     }
 

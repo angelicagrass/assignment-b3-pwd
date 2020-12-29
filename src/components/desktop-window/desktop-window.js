@@ -15,9 +15,7 @@ template.innerHTML = `
 
 
 <style>
-  /* #windowcontainer {
-    position: static;
-  } */
+
   #pwdapp {
     width: 100%;
     height: 100vh;
@@ -27,7 +25,6 @@ template.innerHTML = `
     background-size: 100% 100%;
     overflow: hidden;
     position: relative;
-
     z-index: 1;
     margin: 0;
     padding: 0;
@@ -70,6 +67,7 @@ template.innerHTML = `
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
     margin-right: 10px;
+
   }
 
   #memory {
@@ -113,12 +111,10 @@ customElements.define('desktop-window',
     connectedCallback () {
       this.memoryBtn.addEventListener('click', () => {
         this.idCounter++
-        console.log('memoryyyy')
         let x = document.createElement('my-window')
         let memory = document.createElement('my-memory')
         x.id = 'memory' + this.idCounter
         // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
-        console.log(x.id)
         this.windowContainer.appendChild(x)
         // let y = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector
         // ('#content')
@@ -127,7 +123,6 @@ customElements.define('desktop-window',
         y.appendChild(memory)
       })
       this.chatBtn.addEventListener('click', () => {
-        console.log('chaaaaaat')
         let x = document.createElement('my-window')
         // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Chat'
         let chat = document.createElement('my-chat')
@@ -137,7 +132,6 @@ customElements.define('desktop-window',
         y.appendChild(chat)
       })
       this.customBtn.addEventListener('click', () => {
-        console.log('custom')
         let myApp = document.createElement('my-own')
         let x = document.createElement('my-window')
         // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'My App'
@@ -152,12 +146,14 @@ customElements.define('desktop-window',
 
         y.forEach(element => {
           element.style.zIndex = '10'
-          console.log(y)
+          console.log(element)
         })
         let x = event.target
+
         x.style.zIndex = '100'
 
         console.log(event.target)
+        console.log('ZINDEX HÄR ÖVER')
       })
     }
 
@@ -165,6 +161,53 @@ customElements.define('desktop-window',
      * Removes eventlistener.
      */
     disconnectedCallback () {
+      this.memoryBtn.addEventListener('click', () => {
+        this.idCounter++
+        let x = document.createElement('my-window')
+        let memory = document.createElement('my-memory')
+        x.id = 'memory' + this.idCounter
+        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
+        this.windowContainer.appendChild(x)
+        // let y = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector
+        // ('#content')
+
+        let y = x.shadowRoot.querySelector('#content')
+        y.appendChild(memory)
+      })
+      this.chatBtn.addEventListener('click', () => {
+        let x = document.createElement('my-window')
+        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Chat'
+        let chat = document.createElement('my-chat')
+        this.windowContainer.appendChild(x)
+
+        let y = x.shadowRoot.querySelector('#content')
+        y.appendChild(chat)
+      })
+      this.customBtn.addEventListener('click', () => {
+        let myApp = document.createElement('my-own')
+        let x = document.createElement('my-window')
+        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'My App'
+       
+        this.windowContainer.appendChild(x)
+        let y = x.shadowRoot.querySelector('#content')
+        y.appendChild(myApp)
+      })
+
+      this.windowContainer.addEventListener('click', (event) => {
+        let y = this.shadowRoot.querySelectorAll('my-window')
+
+        y.forEach(element => {
+
+          element.style.zIndex = '10'
+          console.log(element)
+        })
+        let x = event.target
+
+        x.style.zIndex = '100'
+
+        console.log(event.target)
+        console.log('ZINDEX HÄR ÖVER')
+      })
 
     }
   })

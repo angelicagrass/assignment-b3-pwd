@@ -11,6 +11,7 @@ template.innerHTML = `
 <style>
 
   #mydiv {
+    /* min-margin: 2px; */
     top: 20%;
     left: 40%;
     height: min-content;
@@ -21,9 +22,8 @@ template.innerHTML = `
     /* max-height: 1000px;
     max-width: 1000px; */
     background-color: white;
-    opacity: 0.99;
+    /* opacity: 0.99; */
     z-index: 9;
-    /* position: absolute; */
     position: absolute;
     resize: both;
     overflow: scroll;
@@ -75,7 +75,6 @@ customElements.define('my-window',
     connectedCallback () {
       this.dragElement(this.element)
       this.closeBtn.addEventListener('click', () => {
-        console.log('halllååå')
         this.remove()
       })
 
@@ -86,7 +85,6 @@ customElements.define('my-window',
      */
     disconnectedCallback () {
       this.closeBtn.removeEventListener('click', () => {
-        console.log('halllååå')
         this.remove()
       })
     }
@@ -130,7 +128,7 @@ customElements.define('my-window',
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px"
       }
     
-      function closeDragElement() {
+      function closeDragElement () {
         // stop moving when mouse button is released:
         document.onmouseup = null
         document.onmousemove = null
