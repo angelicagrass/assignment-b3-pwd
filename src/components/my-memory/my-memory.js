@@ -34,11 +34,14 @@ template.innerHTML = `
   text-align: center;
   width: 100%;
   justify-content: center;
+  height: 50px;
+  margin-top: 20px;
 }
 
 #scorecontainer {
   margin-top: 30px;
   margin-bottom: 30px;
+  text-align: center;
   }
 
 
@@ -166,7 +169,7 @@ customElements.define('my-memory',
     startGameTable() {
       this.container.style.visibility = "visible"
       this.btnContainer.style.display = "none"
-      this.btnHeader.style.visibility = 'hidden'
+      this.btnHeader.style.display = 'none'
       this.headerText.textContent = 'NUMBER OF ATTEMPTS '
       this.scoreText.textContent = this.currentAttempts
     }

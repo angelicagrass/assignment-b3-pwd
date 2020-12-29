@@ -105,12 +105,9 @@ customElements.define('my-card',
       // this.arrayOfImages()
       this.theCard.addEventListener('click', (e) => {
         // e.preventDefault()
-        console.log('KLICK I MYCARD')
         this.selectedCardsCount++
         this.theCard.classList.add('selected')
         this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
-        console.log('här ovanför')
-        console.log(this.selectedCardsCount)
       })
     }
 
@@ -144,13 +141,12 @@ customElements.define('my-card',
           .shadowRoot
           .querySelectorAll('my-card')
 
-
-
+          console.log(cards)
 
         cards.forEach((card) => {
           card.shadowRoot.querySelector('#theCard').classList.remove('selected')
         })
-      }, 1000)
+      }, 2000)
     }
 
     flipCard() {
