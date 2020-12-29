@@ -1,4 +1,5 @@
 import './my-card.js'
+import '../my-trophy/my-trophy.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -16,6 +17,7 @@ template.innerHTML = `
 </div>
 
 <div id="centertext">
+  
   <h2 id="winner"></h2>
   <h2 id="buttonheader">Choose the size of your game</h2>
 </div>
@@ -28,7 +30,10 @@ template.innerHTML = `
 </div>
 
 
+
 <style>
+
+
 
 #centertext {
   text-align: center;
@@ -64,6 +69,8 @@ h2 {
 #grid2 {
     visibility: hidden;
     display: inline-grid;
+    margin-left: auto;
+    margin-right: auto;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     column-gap: 10px;
@@ -180,6 +187,15 @@ customElements.define('my-memory',
           this.wincounter--
 
           if (this.wincounter === 0) {
+            this.container.style.display = 'none'
+            let trophy = document.createElement('my-trophy')
+            this.shadowRoot.querySelector('#centertext').appendChild(trophy)
+
+
+
+
+
+          // pokalen
             this.winner.textContent = 'WINNER'
           }
           let cardToHide

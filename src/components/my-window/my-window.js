@@ -49,6 +49,8 @@ template.innerHTML = `
   }
 
   #content {
+    min-height: 700px;
+    min-width: 600px;
     margin-left: auto;
     margin-right: auto;
     overflow: auto;
