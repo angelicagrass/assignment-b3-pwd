@@ -81,6 +81,7 @@ customElements.define('my-card',
 
       this.firstCard = true
       this.secondCard = false
+      this.selectedCardsCount = 0
       this.cards = []
       this.y = []
       this.currentid
@@ -97,22 +98,26 @@ customElements.define('my-card',
       }
       if (name === 'activediv') {
         this.currentid = newValue
-        console.log(newValue)
       }
     }
 
     connectedCallback() {
       // this.arrayOfImages()
-      this.theCard.addEventListener('click', () => {
+      this.theCard.addEventListener('click', (e) => {
+        // e.preventDefault()
+        console.log('KLICK I MYCARD')
+        this.selectedCardsCount++
         this.theCard.classList.add('selected')
         this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
         console.log('här ovanför')
+        console.log(this.selectedCardsCount)
       })
     }
 
     disconnectedCallback() {
       this.theCard.removeEventListener('click', () => {
         this.theCard.classList.add('selected')
+        // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       })
     }
 
@@ -140,7 +145,7 @@ customElements.define('my-card',
           .querySelectorAll('my-card')
 
 
-        console.log(cards)
+
 
         cards.forEach((card) => {
           card.shadowRoot.querySelector('#theCard').classList.remove('selected')

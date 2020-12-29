@@ -129,11 +129,10 @@ customElements.define('my-memory',
     connectedCallback() {
       this.container.addEventListener('click', (event) => {
         if (event.target.id !== this.container.id) {
+          console.log('CLICK i MEMORY')
           if (this.flippedCardsNumber.length < 3) {
-            console.log(event.target.attributes.cardname.value)
             const currentCard = event.target.attributes.cardname.value
             this.flippedCardsNumber.push(currentCard)
-            console.log(this.flippedCardsNumber)
             this.compareCards()
           }
         }
@@ -176,20 +175,16 @@ customElements.define('my-memory',
       if (this.flippedCardsNumber.length === 2) {
         if (this.flippedCardsNumber[0] === this.flippedCardsNumber[1]) {
           this.wincounter--
-          console.log(this.wincounter)
 
           if (this.wincounter === 0) {
             this.winner.textContent = 'WINNER'
           }
-
           let cardToHide
 
           if (this.smallBoard === true) {
             cardToHide = this.shadowRoot.querySelector('#grid2').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
-
           } else {
             cardToHide = this.shadowRoot.querySelector('#grid').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
-
           }
           this.flippedCardsNumber = []
           this.currentAttempts++
@@ -199,10 +194,7 @@ customElements.define('my-memory',
             cardToHide.forEach((card) => {
               card.classList.add('hide')
             })
-            console.log(cardToHide)
           }, 1500)
-
-          console.log(this.container)
 
           // if (this.container.childNodes.length = 1) { 
           //   console.log('ENDGAME')
@@ -227,7 +219,6 @@ customElements.define('my-memory',
       for (let i = 0; i < imgArray.length; i++) {
         imgArray[i].setAttribute('src', `./img/A${[i + 1]}.jpg`)
       }
-      console.log(imgArray)
 
       for (let i = 0; i < imgArray.length; i++) {
         for (let j = 0; j < 2; j++) {

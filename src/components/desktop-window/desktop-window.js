@@ -6,9 +6,9 @@ template.innerHTML = `
 <div id="pwdapp"></div>
 <div id="windowcontainer"></div>
 <footer>
-  <button id="memory"></button>
-  <button id="chat"></button>
-  <button id="custom"></button>
+  <button class="iconbtn" id="memory"></button>
+  <button class="iconbtn" id="chat"></button>
+  <button class="iconbtn" id="custom"></button>
 </footer>
 
 
@@ -31,6 +31,18 @@ template.innerHTML = `
     padding: 0;
   }
 
+  /* test */
+
+
+
+  .iconbtn {
+    transition: all .2s ease-in-out;
+    }
+
+  .iconbtn:hover {
+    transform: scale(1.1);
+    }
+
   footer {
     height: 70px;
     position: fixed;
@@ -41,7 +53,7 @@ template.innerHTML = `
     right: 20%;
     left: 20%;
     width: 60%;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.5);
     border-radius: 10px 10px 0 0;
     /* opacity: 0.8; */
     color: white; 
@@ -58,21 +70,21 @@ template.innerHTML = `
   }
 
   #memory {
-    background: url('./img/metalicon.png');
+    background: url('./img/game-icon.png');
     background-repeat: no-repeat;
     margin: 12px 10px 0 20px;
 
   }
 
   #chat {
-    background: url('./img/metaliconchat.png');
+    background: url('./img/chat-icon.png');
     background-repeat: no-repeat;
 
 
   }
 
   #custom {
-    background: url('./img/metaliconchat.png');
+    background: url('./img/quote-icon.png');
     background-repeat: no-repeat;
     
   }
