@@ -1,5 +1,6 @@
 import '../my-window/my-window.js'
 import '../my-memory/my-memory.js'
+import '../my-clock/my-clock.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -9,6 +10,7 @@ template.innerHTML = `
   <button class="iconbtn" id="memory"></button>
   <button class="iconbtn" id="chat"></button>
   <button class="iconbtn" id="custom"></button>
+  <my-clock></my-clock>
 </footer>
 
 
