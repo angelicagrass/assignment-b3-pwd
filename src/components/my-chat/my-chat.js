@@ -326,9 +326,6 @@ customElements.define('my-chat',
         // this.shadowRoot.querySelector('#chat').appendChild(li)
         let el = this.shadowRoot.querySelector('#chat')
         el.insertBefore(li, el.firstChild)
-        
-
-
       })
 
       this.shadowRoot.querySelector('form').addEventListener('submit', event => {

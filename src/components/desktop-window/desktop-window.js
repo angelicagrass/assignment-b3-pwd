@@ -116,11 +116,10 @@ customElements.define('desktop-window',
         x.id = 'memory' + this.idCounter
         // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
         this.windowContainer.appendChild(x)
-        // let y = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector
-        // ('#content')
-
         let y = x.shadowRoot.querySelector('#content')
         y.appendChild(memory)
+        y.style.minWidth = '600px'
+        y.style.minHeight = '700px'
       })
       this.chatBtn.addEventListener('click', () => {
         let x = document.createElement('my-window')
@@ -207,4 +206,9 @@ customElements.define('desktop-window',
       })
 
     }
+
+    createMemory () {}
+
+
+  
   })

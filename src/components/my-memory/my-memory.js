@@ -69,8 +69,6 @@ h2 {
 #grid2 {
     visibility: hidden;
     display: inline-grid;
-    margin-left: auto;
-    margin-right: auto;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     column-gap: 10px;
