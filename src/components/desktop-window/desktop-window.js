@@ -95,11 +95,16 @@ template.innerHTML = `
 
 customElements.define('desktop-window',
   class extends HTMLElement {
-    constructor () {
+    constructor() {
       super()
 
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
+
+      this.createMemoryWindow = this.createMemoryWindow.bind(this)
+      this.createChatWindow = this.createChatWindow.bind(this)
+      this.createMyOwnApp = this.createMyOwnApp.bind(this)
+      this.getWindowToFront = this.getWindowToFront.bind(this)
 
       this.memoryBtn = this.shadowRoot.querySelector('#memory')
       this.chatBtn = this.shadowRoot.querySelector('#chat')
@@ -108,107 +113,76 @@ customElements.define('desktop-window',
       this.idCounter = 0
     }
 
-    connectedCallback () {
+    connectedCallback() {
       this.memoryBtn.addEventListener('click', () => {
-        this.idCounter++
-        let x = document.createElement('my-window')
-        let memory = document.createElement('my-memory')
-        x.id = 'memory' + this.idCounter
-        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
-        this.windowContainer.appendChild(x)
-        let y = x.shadowRoot.querySelector('#content')
-        y.appendChild(memory)
-        y.style.minWidth = '600px'
-        y.style.minHeight = '700px'
+        this.createMemoryWindow()
       })
       this.chatBtn.addEventListener('click', () => {
-        let x = document.createElement('my-window')
-        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Chat'
-        let chat = document.createElement('my-chat')
-        this.windowContainer.appendChild(x)
-
-        let y = x.shadowRoot.querySelector('#content')
-        y.appendChild(chat)
+        this.createChatWindow()
       })
       this.customBtn.addEventListener('click', () => {
-        let myApp = document.createElement('my-own')
-        let x = document.createElement('my-window')
-        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'My App'
-       
-        this.windowContainer.appendChild(x)
-        let y = x.shadowRoot.querySelector('#content')
-        y.appendChild(myApp)
+        this.createMyOwnApp()
       })
-
       this.windowContainer.addEventListener('click', (event) => {
-        let y = this.shadowRoot.querySelectorAll('my-window')
-
-        // z-index fungerar ej än!
-
-        y.forEach(element => {
-          element.style.zIndex = '10'
-        })
-        let x = event.target
-        x.style.zIndex = '100'
+        this.getWindowToFront(event)
       })
     }
 
     /**
      * Removes eventlistener.
      */
-    disconnectedCallback () {
+    disconnectedCallback() {
       this.memoryBtn.addEventListener('click', () => {
-        this.idCounter++
-        let x = document.createElement('my-window')
-        let memory = document.createElement('my-memory')
-        x.id = 'memory' + this.idCounter
-        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
-        this.windowContainer.appendChild(x)
-        // let y = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector
-        // ('#content')
-
-        let y = x.shadowRoot.querySelector('#content')
-        y.appendChild(memory)
+        this.createMemoryWindow()
       })
       this.chatBtn.addEventListener('click', () => {
-        let x = document.createElement('my-window')
-        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Chat'
-        let chat = document.createElement('my-chat')
-        this.windowContainer.appendChild(x)
-
-        let y = x.shadowRoot.querySelector('#content')
-        y.appendChild(chat)
+        this.createChatWindow()
       })
       this.customBtn.addEventListener('click', () => {
-        let myApp = document.createElement('my-own')
-        let x = document.createElement('my-window')
-        // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'My App'
-       
-        this.windowContainer.appendChild(x)
-        let y = x.shadowRoot.querySelector('#content')
-        y.appendChild(myApp)
+        this.createMyOwnApp()
       })
-
       this.windowContainer.addEventListener('click', (event) => {
-        let y = this.shadowRoot.querySelectorAll('my-window')
-
-        y.forEach(element => {
-
-          element.style.zIndex = '10'
-          console.log(element)
-        })
-        let x = event.target
-
-        x.style.zIndex = '100'
-
-        console.log(event.target)
-        console.log('ZINDEX HÄR ÖVER')
+        this.getWindowToFront(event)
       })
-
     }
 
-    createMemory () {}
+    createMemoryWindow() {
+      this.idCounter++
+      let x = document.createElement('my-window')
+      let memory = document.createElement('my-memory')
+      x.id = 'memory' + this.idCounter
+      // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
+      this.windowContainer.appendChild(x)
+      let y = x.shadowRoot.querySelector('#content')
+      y.appendChild(memory)
+      y.style.minWidth = '600px'
+      y.style.minHeight = '700px'
+    }
 
+    createChatWindow() {
+      let x = document.createElement('my-window')
+      let chat = document.createElement('my-chat')
+      this.windowContainer.appendChild(x)
+      let y = x.shadowRoot.querySelector('#content')
+      y.appendChild(chat)
+    }
 
-  
+    createMyOwnApp() {
+      let myApp = document.createElement('my-own')
+      let x = document.createElement('my-window')
+      this.windowContainer.appendChild(x)
+      let y = x.shadowRoot.querySelector('#content')
+      y.appendChild(myApp)
+    }
+
+    getWindowToFront(event) {
+      let y = this.shadowRoot.querySelectorAll('my-window')
+
+      // z-index fungerar ej än!
+      y.forEach(element => {
+        element.style.zIndex = '10'
+      })
+      let x = event.target
+      x.style.zIndex = '100'
+    }
   })
