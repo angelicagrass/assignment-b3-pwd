@@ -30,20 +30,20 @@ customElements.define('my-clock',
     /**
      * Called when the custom element is inserted in the DOM.
      */
-    connectedCallback() {
+    connectedCallback () {
       this.showTime()
     }
 
     /**
      * Removes connectedCallback.
      */
-    disconnectedCallback() {
+    disconnectedCallback () {
       this.showTime()
     }
 
     showTime () {
       // code src = https://codepen.io/afarrar/pen/JRaEjP
-      let date = new Date()
+      const date = new Date()
       let h = date.getHours() // 0 - 23
       let m = date.getMinutes() // 0 - 59
       let s = date.getSeconds() // 0 - 59

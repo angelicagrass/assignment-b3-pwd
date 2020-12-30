@@ -279,17 +279,15 @@ customElements.define('my-chat',
     chatStart () {
       let existing = localStorage.getItem('usernames')
 
-      if (existing) {
+      if (existing) { // If username exists
         existing = JSON.parse(existing)
         console.log(existing.username)
         this.userName = existing.username
         this.chatcontainer.classList.remove('hide')
         this.shadowRoot.querySelector('#username').style.display = 'none'
         this.wsConnect()
-        // OM username finns
       } else {
         this.chatcontainer.classList.add('hide')
-        // OM username inte finns
       }
     }
 

@@ -76,7 +76,6 @@ customElements.define('my-card',
       this.memoryCard = this.shadowRoot.querySelector('.flipcount')
       this.backImg = this.shadowRoot.querySelector('#back')
       this.frontImg = this.shadowRoot.querySelector('#front')
-      this.flipCard = this.flipCard.bind(this)
       this.unflipCards = this.unflipCards.bind(this)
 
       this.firstCard = true
@@ -87,11 +86,11 @@ customElements.define('my-card',
       this.currentid
     }
 
-    static get observedAttributes() {
+    static get observedAttributes () {
       return ['makethemspin', 'activediv']
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback (name, oldValue, newValue) {
       if (name === 'makethemspin') {
         console.log('makethemspin!')
         this.unflipCards()
@@ -101,37 +100,30 @@ customElements.define('my-card',
       }
     }
 
-    connectedCallback() {
-      // this.arrayOfImages()
+    /**
+     * Called when the custom element is inserted in the DOM.
+     */
+    connectedCallback () {
       this.theCard.addEventListener('click', (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         this.selectedCardsCount++
         this.theCard.classList.add('selected')
         this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       })
     }
 
-    disconnectedCallback() {
+    /**
+     * Removes connectedCallback.
+     */
+    disconnectedCallback () {
       this.theCard.removeEventListener('click', () => {
         this.theCard.classList.add('selected')
-        // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
+        this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       })
     }
 
     unflipCards() {
       setTimeout(() => {
-        // const cards = document.querySelector('my-memory').shadowRoot.querySelectorAll('my-card')
-
-        // const cards = document.querySelector('desktop-window')
-        //   .shadowRoot
-        //   .querySelector('#windowcontainer')
-        //   .querySelector('my-window')
-        //   .shadowRoot.querySelector('#mydiv')
-        //   .querySelector('#content')
-        //   .querySelector('my-memory')
-        //   .shadowRoot
-        //   .querySelectorAll('my-card')
-
         const cards = document.querySelector('desktop-window')
           .shadowRoot
           .querySelector('#windowcontainer').querySelector(`#${this.currentid}`)
@@ -141,15 +133,9 @@ customElements.define('my-card',
           .shadowRoot
           .querySelectorAll('my-card')
 
-          console.log(cards)
-
         cards.forEach((card) => {
           card.shadowRoot.querySelector('#theCard').classList.remove('selected')
         })
       }, 2000)
-    }
-
-    flipCard() {
-      // this.classList.toggle('flip')
     }
   })
