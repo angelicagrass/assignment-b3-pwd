@@ -3,8 +3,6 @@ template.innerHTML = `
 <div id="clockcontainer" class="clock" onload="showTime()">
 </div>
 
-
-
 <style>
 .clock {
     position: absolute;
@@ -13,10 +11,8 @@ template.innerHTML = `
     transform: translateX(-50%) translateY(-50%);
     color: white;
     font-size: 15px;
-    /* font-family: Orbitron; */
     letter-spacing: 7px;
 }
-
 </style>
 `
 
@@ -31,12 +27,18 @@ customElements.define('my-clock',
       this.showTime = this.showTime.bind(this)
     }
 
+    /**
+     * Called when the custom element is inserted in the DOM.
+     */
     connectedCallback() {
       this.showTime()
     }
 
+    /**
+     * Removes connectedCallback.
+     */
     disconnectedCallback() {
-
+      this.showTime()
     }
 
     showTime () {
@@ -50,7 +52,6 @@ customElements.define('my-clock',
       if (h === 0) {
         h = 12
       }
-
       if (h > 12) {
         h = h - 12
         session = 'PM'

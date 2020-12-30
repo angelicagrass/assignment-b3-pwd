@@ -30,14 +30,11 @@ template.innerHTML = `
     padding: 0;
   }
 
-  /* test */
-
   .iconbtn {
     transition: all .2s ease-in-out;
     }
 
   .iconbtn:hover {
-    /* transform: scale(1.1); */
     transform: translateY(-5px);
     }
 
@@ -53,7 +50,6 @@ template.innerHTML = `
     width: 60%;
     background: rgba(0,0,0,0.5);
     border-radius: 10px 10px 0 0;
-    /* opacity: 0.8; */
     color: white; 
   }
 
@@ -65,27 +61,22 @@ template.innerHTML = `
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
     margin-right: 10px;
-
   }
 
   #memory {
     background: url('./img/game-icon.png');
     background-repeat: no-repeat;
     margin: 12px 10px 0 20px;
-
   }
 
   #chat {
     background: url('./img/chat-icon.png');
     background-repeat: no-repeat;
-
-
   }
 
   #custom {
     background: url('./img/quote-icon.png');
-    background-repeat: no-repeat;
-    
+    background-repeat: no-repeat; 
   }
 
   </style>
@@ -151,14 +142,14 @@ customElements.define('desktop-window',
      * Creates window with memory game.
      *
      */
-    createMemoryWindow() {
+    createMemoryWindow () {
       this.idCounter++
-      let x = document.createElement('my-window')
-      let memory = document.createElement('my-memory')
+      const x = document.createElement('my-window')
+      const memory = document.createElement('my-memory')
       x.id = 'memory' + this.idCounter
       // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
       this.windowContainer.appendChild(x)
-      let y = x.shadowRoot.querySelector('#content')
+      const y = x.shadowRoot.querySelector('#content')
       y.appendChild(memory)
       y.style.minWidth = '600px'
       y.style.minHeight = '700px'
@@ -168,11 +159,11 @@ customElements.define('desktop-window',
      * Creates window with chat.
      *
      */
-    createChatWindow() {
-      let x = document.createElement('my-window')
-      let chat = document.createElement('my-chat')
+    createChatWindow () {
+      const x = document.createElement('my-window')
+      const chat = document.createElement('my-chat')
       this.windowContainer.appendChild(x)
-      let y = x.shadowRoot.querySelector('#content')
+      const y = x.shadowRoot.querySelector('#content')
       y.appendChild(chat)
     }
 
@@ -180,22 +171,27 @@ customElements.define('desktop-window',
      * Creates window with quote-app.
      *
      */
-    createMyOwnApp() {
-      let myApp = document.createElement('my-own')
-      let x = document.createElement('my-window')
+    createMyOwnApp () {
+      const myApp = document.createElement('my-own')
+      const x = document.createElement('my-window')
       this.windowContainer.appendChild(x)
-      let y = x.shadowRoot.querySelector('#content')
+      const y = x.shadowRoot.querySelector('#content')
       y.appendChild(myApp)
     }
 
-    getWindowToFront(event) {
-      let y = this.shadowRoot.querySelectorAll('my-window')
+    /**
+     * Place clicked window in front.
+     *
+     * @param {string} event - The clicked window.
+     */
+    getWindowToFront (event) {
+      const y = this.shadowRoot.querySelectorAll('my-window')
 
       // z-index fungerar ej än!
       y.forEach(element => {
-        element.style.zIndex = '10'
+        element.style.zIndex = '10' // alla fönster får 10
       })
-      let x = event.target
+      const x = event.target // den som klickas får 100
       x.style.zIndex = '100'
     }
   })

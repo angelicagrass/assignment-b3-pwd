@@ -17,10 +17,8 @@ template.innerHTML = `
       </div>
     </div>
   </div>
-
+  
 <style>
-
-
 
 .wrapper {
   min-width: 500px;
@@ -32,15 +30,6 @@ template.innerHTML = `
   align-items: center;
 }
 
-/* .glow {
-  position: absolute;
-  width: 0px;
-  height: 0px;
-  background: transparent;
-  border-radius: 200px;
-  box-shadow: 0px 0px 400px 200px white;
-  animation: shadow 6s linear infinite;
-} */
 .mask {
   margin: none;
   display: flex;
@@ -48,10 +37,7 @@ template.innerHTML = `
   align-items: center;
   width: 100%;
   height: 100%;
-  /* background: gainsboro;
-  animation-fill-mode: forwards; */
   z-index: 100;
-  /* animation: leftToRight 6s linear; */
 }
 
 .container {
@@ -75,11 +61,11 @@ template.innerHTML = `
 .stem2 {
   position: fixed;
   top: 190px;
-	border-bottom: 100px solid gold;
-	border-left: 50px solid transparent;
-	border-right: 50px solid transparent;
-	height: 0px;
-	width: 40px;
+  border-bottom: 100px solid gold;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  height: 0px;
+  width: 40px;
   border-bottom-left-radius: 200px;
   border-bottom-right-radius: 200px;
   transform: rotate(180deg);
@@ -87,11 +73,11 @@ template.innerHTML = `
 .stem1 {
   position: absolute;
   top: 280px;
-	border-bottom: 100px solid gold;
-	border-left: 50px solid transparent;
-	border-right: 50px solid transparent;
-	height: 0;
-	width: 40px;
+  border-bottom: 100px solid gold;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  height: 0;
+  width: 40px;
   border-top-left-radius: 200px;
   border-top-right-radius: 200px;
 }
@@ -115,7 +101,6 @@ template.innerHTML = `
   border-top-left-radius: 5px;
   border-bottom-left-radius: 100px;
   border-bottom-right-radius: 100px;
-
 }
 .stemCrease {
   position: absolute;
@@ -198,17 +183,5 @@ customElements.define('my-trophy',
 
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
-
-
     }
-
-    connectedCallback() {
-
-    }
-
-    disconnectedCallback() {
-
-    }
-
-
   })

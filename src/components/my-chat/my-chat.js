@@ -1,48 +1,28 @@
 const template = document.createElement('template')
 template.innerHTML = `
 
-
-
-
 <div id="size"> 
-
-
-
-  <!-- <label class="switch">
-  <input type="checkbox" id="mycheck">
-  <span class="slider round"></span>
-  </label> -->
-
-
-<ul id="chat" class="slidedark">
-
-</ul>
-
-<form id ="colorchange">
-  <div id="chatten">
-    <textarea rows="8" cols="50" id="message" class="slidedark"></textarea>
-  <br />
-    <button id="send" type="submit">SEND</button>
+  <ul id="chat" class="slidedark"></ul>
+    <form id ="colorchange">
+      <div id="chatten">
+        <textarea rows="8" cols="50" id="message" class="slidedark"></textarea>
+        <br />
+      <button id="send" type="submit">SEND</button>
   <div id="messageUser"></div>
 </div>
 
-<div id="username">
-  <p>Enter your username to start the chat</p>
-    <label for="username">Username: </label>
-      <input type="text" id="usernamefield" name="usernamefield"><br>
-    <input id="namebtn" type="submit" value="Submit">
-</div>
+  <div id="username">
+    <p>Enter your username to start the chat</p>
+      <label for="username">Username: </label>
+        <input type="text" id="usernamefield" name="usernamefield"><br>
+      <input id="namebtn" type="submit" value="Submit">
+  </div>
 
-<label class="switch">
-  <input type="checkbox" id="mycheck">
+  <label class="switch">
+    <input type="checkbox" id="mycheck">
     <span class="slider round"></span>
-</label>
-
-</form>
-
+  </label>
 </div>
-
-
 
 <style>
   .darkmode {
@@ -52,10 +32,7 @@ template.innerHTML = `
 #message.darkmode {
   color: #A9CBA6;
   font-weight: 500;
-
 }
-
-/* // src slidercode: */
 
 .switch {
   position: relative;
@@ -65,7 +42,6 @@ template.innerHTML = `
   margin-top: 5px;
 }
 
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
@@ -96,8 +72,6 @@ template.innerHTML = `
   -webkit-transition: .4s;
   transition: .4s;
 }
-
-
 
 input:checked + .slider {
   background-color: #2196F3;
@@ -130,8 +104,6 @@ input:checked + .slider:before {
   margin-right: 5px;
 }
 
-
-
   .hide {
     display: none;
   }
@@ -162,8 +134,6 @@ input:checked + .slider:before {
     overflow: scroll;
     -webkit-transform: rotate(180deg);
   }
-
-  
 
   li {
     float: right;
@@ -217,6 +187,8 @@ customElements.define('my-chat',
       this.chatMessage = this.chatMessage.bind(this)
       this.saveToLocalStorage = this.saveToLocalStorage.bind(this)
       this.chatStart = this.chatStart.bind(this)
+      this.darkModeToggle = this.darkModeToggle.bind(this)
+      this.setUserName = this.setUserName.bind(this)
       this.nameBtn = this.shadowRoot.querySelector('#namebtn')
       this.inputName = this.shadowRoot.querySelector('#usernamefield')
       this.form = this.shadowRoot.querySelector('form')
@@ -224,59 +196,86 @@ customElements.define('my-chat',
       this.slide = this.shadowRoot.querySelector('#mycheck')
       this.allArea = this.shadowRoot.querySelectorAll('.slidedark')
       this.userName = ''
-      this.zindex =
+      // this.zindex =
       this.message
     }
 
-    connectedCallback() {
+    /**
+     * Called when the custom element is inserted in the DOM.
+     */
+    connectedCallback () {
       this.chatStart()
-      console.log(this.parentNode.parentNode)
+      this.form.addEventListener('click', () => {
+        // Fungerar ej?
+        this.form.focus()
+      })
+      this.slide.addEventListener('click', () => {
+        this.darkModeToggle()
+      })
+      this.nameBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+        this.setUserName()
+      })
+    }
 
+    /**
+     * Removes eventlistener.
+     */
+    disconnectedCallback () {
+      this.chatStart()
       this.form.addEventListener('click', () => {
         this.form.focus()
       })
-
       this.slide.addEventListener('click', () => {
-        if (this.slide.checked === true) {
-          console.log('han hittar slidern')
-          // this.allArea.classList.add('darkmode')
-          console.log(this.allArea)
-          this.allArea.forEach(element => {
-            element.classList.add('darkmode')
-          })
-          let x = this.parentNode.parentNode
-          x.style.backgroundColor = '#2c2a2a'
-        }
-
-        if (this.slide.checked !== true) {
-          console.log('han hittar slidern')
-          // this.allArea.classList.add('darkmode')
-          console.log(this.allArea)
-          this.allArea.forEach(element => {
-            element.classList.remove('darkmode')
-          })
-          let x = this.parentNode.parentNode
-          x.style.backgroundColor = 'white'
-        }
+        this.darkModeToggle()
       })
-
       this.nameBtn.addEventListener('click', (event) => {
         event.preventDefault()
-        this.userName = this.inputName.value
-        this.chatcontainer.classList.remove('hide')
-        this.shadowRoot.querySelector('#username').style.display = 'none'
-
-        this.saveToLocalStorage()
-        this.wsConnect()
+        this.setUserName()
       })
     }
 
-    disconnectedCallback() {
+    /**
+     * Sets the username to this.userName.
+     *
+     */
+    setUserName () {
+      this.userName = this.inputName.value
+      this.chatcontainer.classList.remove('hide')
+      this.shadowRoot.querySelector('#username').style.display = 'none'
+      this.saveToLocalStorage()
       this.wsConnect()
-      this.form.addEventListener('click', () => {
-      })
     }
 
+    /**
+     * Darkmode toggle.
+     *
+     */
+    darkModeToggle () {
+      if (this.slide.checked === true) {
+        console.log('han hittar slidern')
+        console.log(this.allArea)
+        this.allArea.forEach(element => {
+          element.classList.add('darkmode')
+        })
+        const x = this.parentNode.parentNode
+        x.style.backgroundColor = '#2c2a2a'
+      }
+      if (this.slide.checked !== true) {
+        console.log('han hittar slidern')
+        console.log(this.allArea)
+        this.allArea.forEach(element => {
+          element.classList.remove('darkmode')
+        })
+        const x = this.parentNode.parentNode
+        x.style.backgroundColor = 'white'
+      }
+    }
+
+    /**
+     * Sets the username to this.userName.
+     *
+     */
     chatStart () {
       let existing = localStorage.getItem('usernames')
 
@@ -292,9 +291,12 @@ customElements.define('my-chat',
         this.chatcontainer.classList.add('hide')
         // OM username inte finns
       }
-
     }
 
+    /**
+     * Saves username to local storage.
+     *
+     */
     saveToLocalStorage () {
       const nameObj = {
         username: this.userName
@@ -302,6 +304,10 @@ customElements.define('my-chat',
       window.localStorage.setItem('usernames', JSON.stringify(nameObj))
     }
 
+    /**
+     * Connects chat to server.
+     *
+     */
     wsConnect() {
       const ws = new WebSocket('wss://cscloud6-127.lnu.se/socket/')
       ws.addEventListener('open', () => {
@@ -314,17 +320,11 @@ customElements.define('my-chat',
         const JSONObject = JSON.parse(data)
         const theText = JSONObject.data
         const theName = JSONObject.username
-
         if (theName === `${this.userName}`) {
           li.setAttribute('id', 'me')
         }
-        // if (theName === 'Server') {
-        //   console.log('han hittar server')
-        // }
-
         li.innerText = `${theName}: ${theText}`
-        // this.shadowRoot.querySelector('#chat').appendChild(li)
-        let el = this.shadowRoot.querySelector('#chat')
+        const el = this.shadowRoot.querySelector('#chat')
         el.insertBefore(li, el.firstChild)
       })
 
@@ -337,7 +337,12 @@ customElements.define('my-chat',
       })
     }
 
-    chatMessage(myMessage) {
+    /**
+     * Chatmessage.
+     *
+     * @param {string} myMessage - The chat message.
+     */
+    chatMessage (myMessage) {
       const myObjectToSend = {
         type: 'message',
         data: `${myMessage}`,

@@ -139,13 +139,15 @@ customElements.define('my-own',
     }
 
     async meanQuotes() {
-      // let result = await fetch('https://evilinsult.com/generate_insult.php?lang=en&type=json')
-      // result = await result.json()
+      let result = await fetch('https://evilinsult.com/generate_insult.php?lang=en&type=json')
+      result = await result.json()
+
+      console.log(result)
 
       // const getMean = await fetch('https://evilinsult.com/generate_insult.php?lang=en&type=json', {
       //   method: 'GET',
       //   headers: {
-      //     'Access-Control-Allow-Origin': ''
+      //     'Access-Control-Allow-Origin': '*'
       //   }
       // }).then((response) => {
       //   if (response.status !== 200) {
@@ -157,12 +159,12 @@ customElements.define('my-own',
       // const resp = await getMean.json()
       // console.log(resp)
 
-      let getMeanUrl = 'https://evilinsult.com/generate_insult.php?lang=en&type=json'
+      // let getMeanUrl = 'https://evilinsult.com/generate_insult.php?lang=en&type=json'
 
-      const dom = await this._getDom(getMeanUrl)
-      const meanUrl = Array.from(dom.window.document.querySelectorAll('#insult'))
+      // const dom = await this._getDom(getMeanUrl)
+      // const meanUrl = Array.from(dom.window.document.querySelectorAll('#insult'))
 
-      console.log(meanUrl)
+      // console.log(meanUrl)
     }
 
     async _getDom (link) {

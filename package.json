@@ -44,6 +44,9 @@
     },
     "devOptions": {
       "bundle": false
+    },
+    "proxy": {
+      "/generate_insult": "https://evilinsult.com/"
     }
   }
 }
