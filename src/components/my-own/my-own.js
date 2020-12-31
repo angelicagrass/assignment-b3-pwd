@@ -1,29 +1,61 @@
 const template = document.createElement('template')
 template.innerHTML = ` 
 <div id="mycontainer">
-<div id="textintro">
-<h2 id="starttext">Här ska det va vara en massa text, lite presentation så folk fattar vad dom ska göra.</h2>
-<div id="backbox" class='hide'>
-  <h2 id="quotetext" class="hide">test</h2>
-</div>
+  <div id="textintro">
+    <h2 id="starttext">Här ska det va vara en massa text, lite presentation så folk fattar vad dom ska göra.</h2>
+      <div id="backbox" class='hide'>
+        <h2 id="quotetext" class="hide">test</h2>
+        <button id="newrandombtn" class="hide">NEXT</button>
+        
+      </div>
 
-  <button id="newrandombtn" class="hide">NEXT</button>
 
 
-</div>
-  <div id="buttoncontainer">
-    <button id="getquote">FUNNY QUOTE</button>
-    <button id="getmeanquote">MEAN QUOTE</button>
+
+    </div>
+      <div id="buttoncontainer">
+        <button id="getquote">FUNNY QUOTE</button>
+          <button id="getmeanquote">MEAN QUOTE</button>
   </div>
 </div>
 
 
+
 <style>
-  #backbox {
-    background: rgba(255,255,255, 0.7);
-    border-radius: 3px;
-    padding: 10px 10px 40px 10px;
+
+
+
+
+#backbox {
+  background: rgba(255,255,255, 0.7);
+  border-radius: 3px;
+  position: absolute;
+  padding: 5px 0px 40px 0px;
+  z-index: 8;
+  width: 100%;
+  height:200px;
+
+}
+
+.myimg {
+  /* visibility: hidden; */
+
+}
+.fade-in {
+	animation: fadeIn 2s;
+  	opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+  	opacity: 0;
   }
+  to {
+ 	opacity: 1;
+  }
+}
+
+
 
 .hide {
   display: none;
@@ -39,10 +71,13 @@ template.innerHTML = `
   color: white;
 	font-size: larger;
   transition-duration: 0.4s;
-  width:50%;
-  margin-left:25%;
-  margin-right:25%;
-  margin-top: 80px;
+  width:200px;
+  margin-left:auto;
+  margin-right:auto;
+
+  margin-top: 450px;
+  position: absolute;
+  z-index: 9;
 
 }
 
@@ -53,9 +88,37 @@ template.innerHTML = `
 
   #mycontainer {
     text-align: center;
+    border-radius: 3px;
+    position: relative;
   }
+
+  h2 {
+    position: absolute;
+    z-index: 9;
+  }
+
+
+  /* TEST__________________________________________________*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   #buttoncontainer {
     margin-top: 60%;
+
   }
 
   #getquote, #getmeanquote {
@@ -81,6 +144,7 @@ template.innerHTML = `
 
 
 
+
   
 </style>
 `
@@ -100,14 +164,18 @@ customElements.define('my-own',
       this.quoteText = this.shadowRoot.querySelector('#quotetext')
       this.newRandomBtn = this.shadowRoot.querySelector('#newrandombtn')
       this.backBox = this.shadowRoot.querySelector('#backbox')
+      this.myContainer = this.shadowRoot.querySelector('#mycontainer')
       this.funnyQuotes = this.funnyQuotes.bind(this)
       this.meanQuotes = this.meanQuotes.bind(this)
       this.quotesOnScreen = this.quotesOnScreen.bind(this)
       this.randomBackground = this.randomBackground.bind(this)
+      this.image =
       this.currentQuote = ''
     }
 
     connectedCallback() {
+      this.loadImg()
+
       this.quoteBtn.addEventListener('click', () => {
         console.log('hallå')
         this.funnyQuotes()
@@ -122,6 +190,14 @@ customElements.define('my-own',
         console.log('knappen fungerar')
         this.funnyQuotes()
       })
+    }
+
+    async loadImg () {
+      let image = await fetch('https://source.unsplash.com/user/dmosipenko')
+      // image = await image.json()
+      this.image = image.url
+
+
     }
 
     async funnyQuotes() {
@@ -193,10 +269,23 @@ customElements.define('my-own',
 
 
     async randomBackground() {
-      let image = await fetch('https://source.unsplash.com/user/dmosipenko')
+      let image = await fetch('https://source.unsplash.com/user/dmosipenko/500x400')
       // image = await image.json()
-      image = image.url
-      this.parentNode.style.backgroundImage = `url(${image})`
+      this.image = image.url
+
+
+
+      // this.parentNode.style.backgroundImage = `url(${image})`
+      
+      // this.myContainer.style.backgroundImage = `url(${this.image})`
+
+      let el = document.createElement('img')
+      
+      el.src = `${this.image}`
+      el.classList.add('myimg')
+      this.myContainer.appendChild(el)
+      el.classList.add('fade-in')
+
     }
 
 
