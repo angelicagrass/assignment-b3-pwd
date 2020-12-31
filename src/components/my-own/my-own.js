@@ -60,7 +60,7 @@ template.innerHTML = `
 }
 
 .myimg {
-  /* visibility: hidden; */
+  border-radius: 5px;
 
 }
 .fade-in {
@@ -229,6 +229,8 @@ customElements.define('my-own',
         if (this.firstImage === false) {
           let imageToChange = this.shadowRoot.querySelector('.myimg')
           imageToChange.classList.add('fade-out')
+          let fadeText = this.shadowRoot.querySelector('#quotetext')
+          fadeText.classList.add('fade-out')
         }
 
 
@@ -251,6 +253,12 @@ customElements.define('my-own',
 
     async funnyQuotes() {
       this.btnContainer.classList.add('hide')
+
+
+
+      let fadeText = this.shadowRoot.querySelector('#quotetext')
+      fadeText.classList.remove('fade-out')
+      fadeText.classList.add('fade-in')
 
       let result = await fetch('https://type.fit/api/quotes')
       result = await result.json()
@@ -343,16 +351,6 @@ customElements.define('my-own',
         this.myContainer.appendChild(el)
         el.classList.add('fade-in')
       }
-
-
-
-
-
-      // this.parentNode.style.backgroundImage = `url(${image})`
-      
-      // this.myContainer.style.backgroundImage = `url(${this.image})`
-
-
     }
 
 

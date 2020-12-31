@@ -178,6 +178,7 @@ customElements.define('desktop-window',
       const y = x.shadowRoot.querySelector('#content')
       y.appendChild(myApp)
       y.style.minWidth = '542px'
+      y.style.minHeight = '730px'
     }
 
     /**
