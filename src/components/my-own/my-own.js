@@ -1,11 +1,12 @@
 const template = document.createElement('template')
 template.innerHTML = ` 
 <div id="mycontainer">
-  <div id="textintro">
+
     <h2 id="starttext">Här ska det va vara en massa text, lite presentation så folk fattar vad dom ska göra.</h2>
+    <div id="textintro">
       <div id="backbox" class='hide'>
         <h2 id="quotetext" class="hide">test</h2>
-        <button id="newrandombtn" class="hide">NEXT</button>
+        
         
       </div>
 
@@ -17,11 +18,33 @@ template.innerHTML = `
         <button id="getquote">FUNNY QUOTE</button>
           <button id="getmeanquote">MEAN QUOTE</button>
   </div>
+
+</div>
+<div id="next">
+<button id="newrandombtn" class="hide">NEXT</button>
 </div>
 
 
 
+
 <style>
+
+  #next {
+    position:static;
+    width: 100%;
+    display: flex;
+   justify-content: center;
+   align-items: center;
+   padding-bottom: 50px;
+  }
+
+  #starttext {
+    margin-top: 0px;
+  }
+
+  h2 {
+    text-align: center;
+  }
 
 
 
@@ -34,7 +57,6 @@ template.innerHTML = `
   z-index: 8;
   width: 100%;
   height:200px;
-
 }
 
 .myimg {
@@ -42,7 +64,7 @@ template.innerHTML = `
 
 }
 .fade-in {
-	animation: fadeIn 2s;
+	animation: fadeIn 3s;
   	opacity: 1;
 }
 
@@ -52,6 +74,21 @@ template.innerHTML = `
   }
   to {
  	opacity: 1;
+  }
+}
+
+.fade-out {
+  animation: fadeOut 2s;
+  opacity: 0;
+
+}
+
+@keyframes fadeOut {
+  from {
+  	opacity: 1;
+  }
+  to {
+ 	opacity: 0;
   }
 }
 
@@ -72,17 +109,18 @@ template.innerHTML = `
 	font-size: larger;
   transition-duration: 0.4s;
   width:200px;
-  margin-left:auto;
-  margin-right:auto;
+  bottom: 0px;
+  left: 50%;
 
-  margin-top: 450px;
-  position: absolute;
   z-index: 9;
 
 }
 
 #quotetext {
   padding-top: 10%;
+  max-width: 400px;
+  margin: 0 auto;
+
 
 }
 
@@ -90,12 +128,15 @@ template.innerHTML = `
     text-align: center;
     border-radius: 3px;
     position: relative;
+    margin-top: 0px;
+    min-height: 500px;
+    min-width: 400px;
   }
 
-  h2 {
+  /* h2 {
     position: absolute;
     z-index: 9;
-  }
+  } */
 
 
   /* TEST__________________________________________________*/
@@ -137,10 +178,7 @@ template.innerHTML = `
   margin-bottom: 20px;
   }
 
-  #mycontainer {
-    min-height: 600px;
-    min-width: 400px;
-  }
+
 
 
 
@@ -171,10 +209,11 @@ customElements.define('my-own',
       this.randomBackground = this.randomBackground.bind(this)
       this.image =
       this.currentQuote = ''
+      this.firstImage = true
     }
 
     connectedCallback() {
-      this.loadImg()
+      // this.loadImg()
 
       this.quoteBtn.addEventListener('click', () => {
         console.log('hallå')
@@ -187,8 +226,18 @@ customElements.define('my-own',
       })
 
       this.newRandomBtn.addEventListener('click', () => {
+        if (this.firstImage === false) {
+          let imageToChange = this.shadowRoot.querySelector('.myimg')
+          imageToChange.classList.add('fade-out')
+        }
+
+
+        setTimeout(() => {
+          this.funnyQuotes()
+        }, 1500)
+
         console.log('knappen fungerar')
-        this.funnyQuotes()
+        
       })
     }
 
@@ -270,8 +319,32 @@ customElements.define('my-own',
 
     async randomBackground() {
       let image = await fetch('https://source.unsplash.com/user/dmosipenko/500x400')
-      // image = await image.json()
       this.image = image.url
+
+      if (this.firstImage === false) {
+
+        let imageToChange = this.shadowRoot.querySelector('.myimg')
+        this.myContainer.removeChild(imageToChange)
+
+
+        let el = document.createElement('img')
+        el.src = `${this.image}`
+        el.classList.add('myimg')
+        this.myContainer.appendChild(el)
+        el.classList.add('fade-in')
+      }
+      
+
+      if (this.firstImage === true) {
+        this.firstImage = false
+        let el = document.createElement('img')
+        el.src = `${this.image}`
+        el.classList.add('myimg')
+        this.myContainer.appendChild(el)
+        el.classList.add('fade-in')
+      }
+
+
 
 
 
@@ -279,12 +352,6 @@ customElements.define('my-own',
       
       // this.myContainer.style.backgroundImage = `url(${this.image})`
 
-      let el = document.createElement('img')
-      
-      el.src = `${this.image}`
-      el.classList.add('myimg')
-      this.myContainer.appendChild(el)
-      el.classList.add('fade-in')
 
     }
 
