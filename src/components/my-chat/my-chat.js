@@ -212,6 +212,8 @@ customElements.define('my-chat',
       this.chatStart = this.chatStart.bind(this)
       this.darkModeToggle = this.darkModeToggle.bind(this)
       this.setUserName = this.setUserName.bind(this)
+      this.emojiPicker = this.emojiPicker.bind(this)
+
       this.nameBtn = this.shadowRoot.querySelector('#namebtn')
       this.inputName = this.shadowRoot.querySelector('#usernamefield')
       this.form = this.shadowRoot.querySelector('form')
@@ -227,26 +229,7 @@ customElements.define('my-chat',
      * Called when the custom element is inserted in the DOM.
      */
     connectedCallback () {
-
-
-
-
-      const picker = new EmojiButton()
-      const trigger = this.shadowRoot.querySelector('.trigger')
-
-      picker.on('emoji', selection => {
-        trigger.innerHTML = selection.emoji
-      })
-
-      trigger.addEventListener('click', (event) => {
-        event.preventDefault()
-        
-        picker.togglePicker(trigger)
-
-      })
-
-
-
+      this.emojiPicker()
       this.chatStart()
       this.form.addEventListener('click', () => {
         // Fungerar ej?
@@ -288,6 +271,24 @@ customElements.define('my-chat',
       this.shadowRoot.querySelector('#username').style.display = 'none'
       this.saveToLocalStorage()
       this.wsConnect()
+    }
+
+    /**
+     * Emoji picker in chat.
+     *
+     */
+    emojiPicker () {
+      const picker = new EmojiButton()
+      const trigger = this.shadowRoot.querySelector('.trigger')
+
+      picker.on('emoji', selection => {
+        trigger.innerHTML = selection.emoji
+      })
+
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault()
+        picker.togglePicker(trigger)
+      })
     }
 
     /**
