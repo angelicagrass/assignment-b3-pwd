@@ -37,17 +37,6 @@ template.innerHTML = `
 
 <style>
 
-
-/* .emoji-picker__wrapper {
-  z-index: 100000;
-  position: relative;
-} */
-
-
-
-
-
-
   .darkmode {
   background-color: #413D3D;
 }
@@ -220,6 +209,7 @@ customElements.define('my-chat',
       this.chatcontainer = this.shadowRoot.querySelector('#chatten')
       this.slide = this.shadowRoot.querySelector('#mycheck')
       this.allArea = this.shadowRoot.querySelectorAll('.slidedark')
+      this.picker = new EmojiButton()
       this.userName = ''
       // this.zindex =
       this.message
@@ -278,16 +268,19 @@ customElements.define('my-chat',
      *
      */
     emojiPicker () {
-      const picker = new EmojiButton()
+      // const picker = new EmojiButton()
       const trigger = this.shadowRoot.querySelector('.trigger')
+      const textField = this.shadowRoot.querySelector('#message')
 
-      picker.on('emoji', selection => {
+      this.picker.on('emoji', selection => {
         trigger.innerHTML = selection.emoji
+        textField.value += selection.emoji
+        console.log(selection.emoji)
       })
 
       trigger.addEventListener('click', (event) => {
         event.preventDefault()
-        picker.togglePicker(trigger)
+        this.picker.togglePicker(trigger)
       })
     }
 
@@ -299,6 +292,9 @@ customElements.define('my-chat',
       if (this.slide.checked === true) {
         console.log('han hittar slidern')
         console.log(this.allArea)
+
+        this.picker.setTheme('dark')
+
         this.allArea.forEach(element => {
           element.classList.add('darkmode')
         })
@@ -308,6 +304,7 @@ customElements.define('my-chat',
       if (this.slide.checked !== true) {
         console.log('han hittar slidern')
         console.log(this.allArea)
+        this.picker.setTheme('light')
         this.allArea.forEach(element => {
           element.classList.remove('darkmode')
         })
@@ -350,7 +347,7 @@ customElements.define('my-chat',
      * Connects chat to server.
      *
      */
-    wsConnect() {
+    wsConnect () {
       const ws = new WebSocket('wss://cscloud6-127.lnu.se/socket/')
       ws.addEventListener('open', () => {
         console.log('WE ARE CONNECTED')
