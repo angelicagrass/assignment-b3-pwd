@@ -1,9 +1,7 @@
 import { EmojiButton } from '@joeattardi/emoji-button'
-// import { EmojiPicker } from 'vanilla-emoji-picker'
 
 const template = document.createElement('template')
 template.innerHTML = `
-
 
 <div id="size"> 
   <ul id="chat" class="slidedark"></ul>
@@ -13,31 +11,38 @@ template.innerHTML = `
         <br />
       <button id="send" type="submit">SEND</button>
   <div id="messageUser"></div>
-</div>
-
-
-
-
-
-
-  <div id="username">
-    <p>Enter your username to start the chat</p>
-      <label for="username">Username: </label>
-        <input type="text" id="usernamefield" name="usernamefield"><br>
-      <input id="namebtn" type="submit" value="Submit">
   </div>
-
-  <label class="switch">
-    <input type="checkbox" id="mycheck">
-    <span class="slider round"></span>
-  </label>
-<button class="trigger">Emoji</button> 
-
+    <div id="username">
+      <p>Enter your username to start the chat</p>
+        <label for="username">Username: </label>
+          <input type="text" id="usernamefield" name="usernamefield"><br>
+        <input id="namebtn" type="submit" value="Submit">
+    </div>
+  <div id="switchemoji">
+    <label class="switch">
+      <input type="checkbox" id="mycheck">
+      <span class="slider round"></span>
+    </label>
+    <button class="trigger">🙂</button> 
+  </div>
 </div>
 
 <style>
 
-  .darkmode {
+  #switchemoji {
+    display: inline-block;
+    position: relative;
+  }
+
+.trigger {
+  height: 34px;
+  border-radius: 3px;
+  border: none;
+  position: absolute;
+  bottom: 0;
+}
+
+.darkmode {
   background-color: #413D3D;
 }
 
@@ -52,6 +57,7 @@ template.innerHTML = `
   width: 60px;
   height: 34px;
   margin-top: 5px;
+  margin-right:5px;
 }
 
 .switch input {
@@ -268,7 +274,6 @@ customElements.define('my-chat',
      *
      */
     emojiPicker () {
-      // const picker = new EmojiButton()
       const trigger = this.shadowRoot.querySelector('.trigger')
       const textField = this.shadowRoot.querySelector('#message')
 
