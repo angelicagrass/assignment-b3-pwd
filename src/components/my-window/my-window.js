@@ -9,6 +9,11 @@ template.innerHTML = `
 </div>
 
 <style>
+  /* :host {
+
+    position: absolute;
+    z-index: 9;
+  } */
 
   #mydiv {
     /* min-margin: 2px; */
@@ -25,7 +30,7 @@ template.innerHTML = `
     /* opacity: 0.99; */
     z-index: 9;
     position: absolute;
-    resize: both;
+    /* resize: both; */
     overflow: scroll;
   }
 
@@ -73,16 +78,16 @@ customElements.define('my-window',
 
       this.element = this.shadowRoot.querySelector('#mydiv')
       this.dragElement = this.dragElement.bind(this)
-      this.remove = this.remove.bind(this)
+      this.removeWindow = this.removeWindow.bind(this)
       this.closeBtn = this.shadowRoot.querySelector('#close')
     }
 
     connectedCallback () {
       this.dragElement(this.element)
-      this.closeBtn.addEventListener('click', () => {
-        this.remove()
+      this.closeBtn.addEventListener('click', (event) => {
+        event.preventDefault()
+        this.removeWindow(event)
       })
-
     }
 
     /**
@@ -94,9 +99,16 @@ customElements.define('my-window',
       })
     }
 
-    remove() {
+    removeWindow() {
+
       let myWindow = this.shadowRoot.querySelector('#mydiv')
-      myWindow.remove()
+
+      let test = myWindow.getRootNode().host
+      
+      console.log(myWindow.getRootNode().host)
+
+      test.remove()
+      // test.remove()
     }
 
     dragElement (elmnt) {

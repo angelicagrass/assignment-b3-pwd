@@ -7,7 +7,7 @@ template.innerHTML = `
   <ul id="chat" class="slidedark"></ul>
     <form id ="colorchange">
       <div id="chatten">
-        <textarea rows="8" cols="50" id="message" class="slidedark" data-emoji-picker="true"></textarea>
+        <textarea rows="8" cols="40" id="message" class="slidedark" data-emoji-picker="true"></textarea>
         <br />
       <button id="send" type="submit">SEND</button>
   <div id="messageUser"></div>
@@ -29,6 +29,15 @@ template.innerHTML = `
 
 <style>
 
+  textarea 
+    {
+      width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+    
+
   #switchemoji {
     display: inline-block;
     position: relative;
@@ -40,6 +49,7 @@ template.innerHTML = `
   border: none;
   position: absolute;
   bottom: 0;
+  background-color: #ededed;
 }
 
 .darkmode {
@@ -92,11 +102,11 @@ template.innerHTML = `
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #7EBEA3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #7EBEA3;
 }
 
 input:checked + .slider:before {
@@ -187,7 +197,6 @@ input:checked + .slider:before {
     width: 80px;
     height: 34px;
     border-radius: 3px;
-
   }
 
 </style>
@@ -216,9 +225,8 @@ customElements.define('my-chat',
       this.slide = this.shadowRoot.querySelector('#mycheck')
       this.allArea = this.shadowRoot.querySelectorAll('.slidedark')
       this.picker = new EmojiButton()
+      this.message =
       this.userName = ''
-      // this.zindex =
-      this.message
     }
 
     /**
@@ -274,6 +282,7 @@ customElements.define('my-chat',
      *
      */
     emojiPicker () {
+      // emojipicker: https://emoji-button.js.org/ installed with npm.
       const trigger = this.shadowRoot.querySelector('.trigger')
       const textField = this.shadowRoot.querySelector('#message')
 
@@ -294,12 +303,11 @@ customElements.define('my-chat',
      *
      */
     darkModeToggle () {
+      const emojiBtn = this.shadowRoot.querySelector('.trigger')
+
       if (this.slide.checked === true) {
-        console.log('han hittar slidern')
-        console.log(this.allArea)
-
         this.picker.setTheme('dark')
-
+        emojiBtn.style.backgroundColor = '#413D3D'
         this.allArea.forEach(element => {
           element.classList.add('darkmode')
         })
@@ -307,8 +315,7 @@ customElements.define('my-chat',
         x.style.backgroundColor = '#2c2a2a'
       }
       if (this.slide.checked !== true) {
-        console.log('han hittar slidern')
-        console.log(this.allArea)
+        emojiBtn.style.backgroundColor = '#ededed'
         this.picker.setTheme('light')
         this.allArea.forEach(element => {
           element.classList.remove('darkmode')

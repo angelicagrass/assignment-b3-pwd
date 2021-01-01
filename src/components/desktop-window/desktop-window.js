@@ -116,7 +116,22 @@ customElements.define('desktop-window',
         this.createMyOwnApp()
       })
       this.windowContainer.addEventListener('click', (event) => {
-        this.getWindowToFront(event)
+
+
+
+
+        // stäng knappen
+        // let closeBtn = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector('#close')
+
+        
+
+   
+          this.getWindowToFront(event)
+
+
+
+
+      
       })
     }
 
@@ -191,9 +206,11 @@ customElements.define('desktop-window',
 
       // z-index fungerar ej än!
       y.forEach(element => {
-        element.style.zIndex = '10' // alla fönster får 10
+        let myDiv = element.shadowRoot.querySelector('#mydiv')
+        myDiv.style.zIndex = '10' // alla fönster får 10
       })
       const x = event.target // den som klickas får 100
-      x.style.zIndex = '100'
+      let clickeddiv = x.shadowRoot.querySelector('#mydiv')
+      clickeddiv.style.zIndex = '100'
     }
   })
