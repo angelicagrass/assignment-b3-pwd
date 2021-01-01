@@ -13,4 +13,9 @@ body {
 
 }
 
+.emoji-picker__wrapper {
+  z-index: 100000;
+  position: relative;
+}
+
 

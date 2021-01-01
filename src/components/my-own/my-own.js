@@ -311,19 +311,6 @@ customElements.define('my-own',
   
       return response.text()
     }
-  
-
-
-
-
-
-
-
-
-
-
-
-
 
     async randomBackground() {
       let image = await fetch('https://source.unsplash.com/user/dmosipenko/500x400')
@@ -353,9 +340,6 @@ customElements.define('my-own',
       }
     }
 
-
-
-
     quotesOnScreen() {
       this.randomBackground()
       console.log('we are on screen')
@@ -364,8 +348,6 @@ customElements.define('my-own',
       this.quoteText.classList.remove('hide')
       this.newRandomBtn.classList.remove('hide')
       this.quoteText.textContent = `${this.currentQuote}`
-
-
     }
 
     disconnectedCallback() {

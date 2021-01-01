@@ -48,5 +48,9 @@
     "proxy": {
       "/generate_insult": "https://evilinsult.com/"
     }
+  },
+  "dependencies": {
+    "@joeattardi/emoji-button": "^4.6.0",
+    "vanilla-emoji-picker": "^0.2.4"
   }
 }

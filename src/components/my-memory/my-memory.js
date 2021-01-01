@@ -186,8 +186,15 @@ customElements.define('my-memory',
 
           if (this.wincounter === 0) {
             this.container.style.display = 'none'
-            let trophy = document.createElement('my-trophy')
-            this.shadowRoot.querySelector('#centertext').appendChild(trophy)
+
+            setTimeout(() => {
+
+              let trophy = document.createElement('my-trophy')
+              this.shadowRoot.querySelector('#centertext').appendChild(trophy)
+
+
+            }, 2000)
+
 
 
 

@@ -1,15 +1,24 @@
+import { EmojiButton } from '@joeattardi/emoji-button'
+// import { EmojiPicker } from 'vanilla-emoji-picker'
+
 const template = document.createElement('template')
 template.innerHTML = `
+
 
 <div id="size"> 
   <ul id="chat" class="slidedark"></ul>
     <form id ="colorchange">
       <div id="chatten">
-        <textarea rows="8" cols="50" id="message" class="slidedark"></textarea>
+        <textarea rows="8" cols="50" id="message" class="slidedark" data-emoji-picker="true"></textarea>
         <br />
       <button id="send" type="submit">SEND</button>
   <div id="messageUser"></div>
 </div>
+
+
+
+
+
 
   <div id="username">
     <p>Enter your username to start the chat</p>
@@ -22,9 +31,23 @@ template.innerHTML = `
     <input type="checkbox" id="mycheck">
     <span class="slider round"></span>
   </label>
+<button class="trigger">Emoji</button> 
+
 </div>
 
 <style>
+
+
+/* .emoji-picker__wrapper {
+  z-index: 100000;
+  position: relative;
+} */
+
+
+
+
+
+
   .darkmode {
   background-color: #413D3D;
 }
@@ -204,6 +227,26 @@ customElements.define('my-chat',
      * Called when the custom element is inserted in the DOM.
      */
     connectedCallback () {
+
+
+
+
+      const picker = new EmojiButton()
+      const trigger = this.shadowRoot.querySelector('.trigger')
+
+      picker.on('emoji', selection => {
+        trigger.innerHTML = selection.emoji
+      })
+
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault()
+        
+        picker.togglePicker(trigger)
+
+      })
+
+
+
       this.chatStart()
       this.form.addEventListener('click', () => {
         // Fungerar ej?
