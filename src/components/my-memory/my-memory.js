@@ -28,6 +28,8 @@ template.innerHTML = `
   <button id="fourxtwo" class="sizebutton">4x2</button>
   <button id="twoxtwo" class="sizebutton">2x2</button>
 </div>
+<div id="resetBtnDiv">
+  <button id="resetBtn" class="hide">Try Again!</button>
 
 
 
@@ -48,6 +50,27 @@ template.innerHTML = `
   margin-bottom: 30px;
   text-align: center;
   }
+
+#resetBtnDiv {
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
+
+#resetBtn {
+  position: relative;
+  padding: 16px 25px;
+	border-radius: 10px;
+	background-color: #7EBEA3;
+  font-weight: 600;
+  border: none;
+  border-bottom: 4px solid #53A08E;
+  color: white;
+	font-size: larger;
+	transition-duration: 0.4s;
+  margin: 20px;
+
+}
 
 
 h2 {
@@ -76,6 +99,14 @@ h2 {
 
 }
 
+.resetgrid2 {
+  display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px; 
+}
+
  .hide {
    visibility: hidden;
    transition: 0.8s;
@@ -100,6 +131,8 @@ h2 {
   margin: 20px;
  }
 
+
+
  .scorecontainer {
    display: inline-block;
  }
@@ -118,6 +151,7 @@ customElements.define('my-memory',
 
       this.compareCards = this.compareCards.bind(this)
       this.startGameTable = this.startGameTable.bind(this)
+      this.resetMemory = this.resetMemory.bind(this)
       this.container = this.shadowRoot.querySelector('#grid')
       this.scoreText = this.shadowRoot.querySelector('#score')
       this.winner = this.shadowRoot.querySelector('#winner')
@@ -127,6 +161,7 @@ customElements.define('my-memory',
       this.btnContainer = this.shadowRoot.querySelector('#buttons')
       this.headerText = this.shadowRoot.querySelector('#scoretext')
       this.btnHeader = this.shadowRoot.querySelector('#buttonheader')
+      this.resetBtn = this.shadowRoot.querySelector('#resetBtn')
       this.smallBoard = false
       this.howManyCards =
       this.flippedCardsNumber = []
@@ -135,6 +170,7 @@ customElements.define('my-memory',
     }
 
     connectedCallback() {
+
       this.container.addEventListener('click', (event) => {
         if (event.target.id !== this.container.id) {
           console.log('CLICK i MEMORY')
@@ -166,7 +202,54 @@ customElements.define('my-memory',
         this.startGameTable()
       })
 
+      this.resetBtn.addEventListener('click', () => {
+        console.log('RESET')
+        this.resetMemory()
+      })
+
       this.arrayOfImages()
+    }
+
+
+
+    resetMemory () {
+
+      let trophy = this.shadowRoot.querySelector('my-trophy')
+      trophy.style.display = 'none'
+
+      let bigTable = this.shadowRoot.querySelector('#grid')
+
+
+
+      if (this.howManyCards === 8) {
+        while (bigTable.firstChild) {
+          bigTable.removeChild(bigTable.lastChild)
+        }
+        bigTable.style.display = 'grid'
+        this.wincounter = 8
+        this.arrayOfImages()
+        this.startGameTable()
+        console.log('stora')
+      } else if (this.howManyCards === 4) {
+        this.shadowRoot.querySelector('#centertext').removeChild('my-trophy')
+        console.log('mellan')
+        this.wincounter = 4
+        this.arrayOfImages()
+        this.startGameTable()
+      } else if (this.howManyCards === 2) {
+
+        let gametable = this.shadowRoot.querySelector('#grid2')
+
+        while (gametable.firstChild) {
+          gametable.removeChild(gametable.lastChild)
+        }
+        gametable.style.display = 'inline-grid'
+        gametable.classList.add('resetgrid2')
+        this.howManyCards = 2
+        this.wincounter = 2
+        this.arrayOfImages()
+        this.startGameTable()
+      }
     }
 
 
@@ -186,6 +269,7 @@ customElements.define('my-memory',
 
           if (this.wincounter === 0) {
             this.container.style.display = 'none'
+            this.resetBtn.classList.remove('hide')
 
             setTimeout(() => {
 

@@ -168,6 +168,7 @@ customElements.define('desktop-window',
       y.appendChild(memory)
       y.style.minWidth = '600px'
       y.style.minHeight = '700px'
+      
     }
 
     /**
@@ -180,6 +181,7 @@ customElements.define('desktop-window',
       this.windowContainer.appendChild(x)
       const y = x.shadowRoot.querySelector('#content')
       y.appendChild(chat)
+      
     }
 
     /**

@@ -21,14 +21,14 @@ template.innerHTML = `
     left: 40%;
     height: min-content;
     width: min-content;
-    border-radius: 3px;
+    border-radius: 5px;
     border: solid 1px #e2e2e2;
     /* z-index: 10;  */
     /* max-height: 1000px;
     max-width: 1000px; */
     background-color: white;
     /* opacity: 0.99; */
-    z-index: 9;
+    z-index: 100;
     position: absolute;
     /* resize: both; */
     overflow: scroll;

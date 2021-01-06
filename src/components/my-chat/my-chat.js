@@ -31,6 +31,8 @@ template.innerHTML = `
 
   textarea 
     {
+      resize: none;
+      border: 1px solid lightgrey;
       width: 100%;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -141,6 +143,8 @@ input:checked + .slider:before {
     height: 643px;
   }
   #chat {
+    width: 399px;
+
     list-style-type: none;
   }
 

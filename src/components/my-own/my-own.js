@@ -20,6 +20,7 @@ template.innerHTML = `
   </div>
 
 </div>
+<button id="like">heart</button>
 <div id="next">
 <button id="newrandombtn" class="hide">NEXT</button>
 </div>
@@ -203,12 +204,15 @@ customElements.define('my-own',
       this.newRandomBtn = this.shadowRoot.querySelector('#newrandombtn')
       this.backBox = this.shadowRoot.querySelector('#backbox')
       this.myContainer = this.shadowRoot.querySelector('#mycontainer')
+      this.likeBtn = this.shadowRoot.querySelector('#like')
       this.funnyQuotes = this.funnyQuotes.bind(this)
       this.meanQuotes = this.meanQuotes.bind(this)
       this.quotesOnScreen = this.quotesOnScreen.bind(this)
       this.randomBackground = this.randomBackground.bind(this)
+      this.saveToLocaleStorage = this.saveToLocaleStorage.bind(this)
+
       this.image =
-      this.currentQuote = ''
+        this.currentQuote = ''
       this.firstImage = true
     }
 
@@ -232,23 +236,39 @@ customElements.define('my-own',
           let fadeText = this.shadowRoot.querySelector('#quotetext')
           fadeText.classList.add('fade-out')
         }
-
-
         setTimeout(() => {
           this.funnyQuotes()
         }, 1500)
+      })
 
-        console.log('knappen fungerar')
-        
+      this.likeBtn.addEventListener('click', () => {
+        this.saveToLocaleStorage()
       })
     }
 
-    async loadImg () {
+    saveToLocaleStorage () {
+      console.log(this.currentQuote)
+
+      const quoteObj = {
+        quote: this.currentQuote
+      }
+      window.localStorage.setItem('quotes', JSON.stringify(quoteObj))
+
+      let existing = localStorage.getItem('quotes')
+
+      // if (typeof existing !== 'undefined') {
+      //   existing = existing ? JSON.parse(existing) : {}
+      //   existing = this.currentQuote
+
+      //   window.localStorage.setItem('myscoreboard', JSON.stringify(existing))
+      //   this.winner = false
+      // }
+    }
+
+    async loadImg() {
       let image = await fetch('https://source.unsplash.com/user/dmosipenko')
       // image = await image.json()
       this.image = image.url
-
-
     }
 
     async funnyQuotes() {
@@ -272,43 +292,64 @@ customElements.define('my-own',
     }
 
     async meanQuotes() {
-      let result = await fetch('https://evilinsult.com/generate_insult.php?lang=en&type=json')
-      result = await result.json()
+      fetch("https://jokeapi-v2.p.rapidapi.com/joke/Any?contains=C%2523&format=json&blacklistFlags=nsfw%2Cracist&idRange=0-150&type=single%2Ctwopart", {
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-key": "90ac4f758fmsh76fea2241e6dc45p1ee6acjsn4b76aefcb3e7",
+		"x-rapidapi-host": "jokeapi-v2.p.rapidapi.com"
+	}
+})
+.then(response => {
+	console.log(response)
+})
+.catch(err => {
+	console.error(err)
+})
 
-      console.log(result)
 
-      // const getMean = await fetch('https://evilinsult.com/generate_insult.php?lang=en&type=json', {
-      //   method: 'GET',
-      //   headers: {
-      //     'Access-Control-Allow-Origin': '*'
-      //   }
-      // }).then((response) => {
-      //   if (response.status !== 200) {
-      //     console.log(response)
-      //   } else {
-      //     return response
-      //   }
-      // })
-      // const resp = await getMean.json()
-      // console.log(resp)
 
-      // let getMeanUrl = 'https://evilinsult.com/generate_insult.php?lang=en&type=json'
+// let myJoke = fetch('https://joke3.p.rapidapi.com/v1/joke', {
+//         'headers': {
+//           'x-rapidapi-key': '90ac4f758fmsh76fea2241e6dc45p1ee6acjsn4b76aefcb3e7',
+//           'x-rapidapi-host': 'joke3.p.rapidapi.com'
+//         }
+//       })
+//         .then(response => {
+//           console.log(response.body)
+//         })
+//         .catch(err => {
+//           console.error(err)
+//         })
 
-      // const dom = await this._getDom(getMeanUrl)
-      // const meanUrl = Array.from(dom.window.document.querySelectorAll('#insult'))
 
-      // console.log(meanUrl)
+
+// const data = null;
+
+// const xhr = new XMLHttpRequest();
+// xhr.withCredentials = true;
+
+// xhr.addEventListener("readystatechange", function () {
+// 	if (this.readyState === this.DONE) {
+// 		console.log(this.responseText);
+// 	}
+// });
+
+// xhr.open("GET", "https://joke3.p.rapidapi.com/v1/joke");
+// xhr.setRequestHeader("x-rapidapi-key", "90ac4f758fmsh76fea2241e6dc45p1ee6acjsn4b76aefcb3e7");
+// xhr.setRequestHeader("x-rapidapi-host", "joke3.p.rapidapi.com");
+
+// xhr.send(data);
     }
 
-    async _getDom (link) {
+    async _getDom(link) {
       const text = await this._getText(link)
       const linkDom = new JSDOM(text)
       return linkDom
     }
 
-    async _getText (url) {
+    async _getText(url) {
       const response = await fetch(url)
-  
+
       return response.text()
     }
 
@@ -328,7 +369,7 @@ customElements.define('my-own',
         this.myContainer.appendChild(el)
         el.classList.add('fade-in')
       }
-      
+
 
       if (this.firstImage === true) {
         this.firstImage = false
