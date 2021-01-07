@@ -104,6 +104,7 @@ customElements.define('my-card',
      * Called when the custom element is inserted in the DOM.
      */
     connectedCallback () {
+      console.log()
       this.theCard.addEventListener('click', (e) => {
         e.preventDefault()
         this.selectedCardsCount++
@@ -124,6 +125,7 @@ customElements.define('my-card',
 
     unflipCards() {
       setTimeout(() => {
+        console.log(this.currentid)
         const cards = document.querySelector('desktop-window')
           .shadowRoot
           .querySelector('#windowcontainer').querySelector(`#${this.currentid}`)
