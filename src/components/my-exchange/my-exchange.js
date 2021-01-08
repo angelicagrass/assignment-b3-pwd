@@ -59,19 +59,12 @@ template.innerHTML = `
         <option value=""></option>
       </select>
       <input type="number" id="amount-one" placeholder="0" value="1">
-
     </div>
 
     <div class="swap-rate-container">
-
-    <button class="btn" id="swap">SWAP</button>
+      <button class="btn" id="swap">SWAP</button>
     <div class="rate" id="rate"></div>
-
-
-
-
     </div>
-
     <div class="currency">
       <select id="currency-two">
       <option value="AED">AED</option>
@@ -127,12 +120,8 @@ template.innerHTML = `
         <option value=""></option>
       </select>
       <input type="number" id="amount-two" placeholder="0">
-
     </div>
-
   </div>
-
-
 <style>
 
 
@@ -213,13 +202,7 @@ p {
 
 select:focus, input:focus, button:focus {
   outline: 0;
-}
-
-
-
-
-
-    
+}   
 </style>
 `
 
@@ -231,60 +214,58 @@ customElements.define('my-exchange',
       this.attachShadow({ mode: 'open' })
         .appendChild(template.content.cloneNode(true))
 
-        this.getValue = this.getValue.bind(this)
+      this.getValue = this.getValue.bind(this)
 
-        this.firstCurrency = this.shadowRoot.querySelector('#currency-one')
-        this.secondCurrency = this.shadowRoot.querySelector('#currency-two')
-        this.firstAmount = this.shadowRoot.querySelector('#amount-one')
-        this.secondAmount = this.shadowRoot.querySelector('#amount-two')
-        this.rateElement = this.shadowRoot.querySelector('#rate')
-        this.swapBtn = this.shadowRoot.querySelector('#swap')
-
-
-
+      this.firstCurrency = this.shadowRoot.querySelector('#currency-one')
+      this.secondCurrency = this.shadowRoot.querySelector('#currency-two')
+      this.firstAmount = this.shadowRoot.querySelector('#amount-one')
+      this.secondAmount = this.shadowRoot.querySelector('#amount-two')
+      this.rateElement = this.shadowRoot.querySelector('#rate')
+      this.swapBtn = this.shadowRoot.querySelector('#swap')
     }
 
     /**
      * Called when the custom element is inserted in the DOM.
      */
     connectedCallback () {
+      this.firstCurrency.addEventListener('change', this.getValue)
+      this.secondCurrency.addEventListener('change', this.getValue)
+      this.firstAmount.addEventListener('input', this.getValue)
+      this.secondAmount.addEventListener('input', this.getValue)
+      this.swapBtn.addEventListener('click', () => {
+        const temp = this.firstCurrency.value
+        this.firstCurrency.value = this.secondCurrency.value
 
+        this.secondCurrency.value = temp
+        this.getValue()
+
+      })
+    }
+
+    /**
+     * Removes connectedCallback.
+     */
+    disconnectedCallback () {
       this.firstCurrency.addEventListener('change', this.getValue)
       this.secondCurrency.addEventListener('change', this.getValue)
       this.firstAmount.addEventListener('input', this.getValue)
       this.secondAmount.addEventListener('input', this.getValue)
     }
 
-
     /**
-     * Removes connectedCallback.
+     * Exchange rate calculator.
+     *
      */
-    disconnectedCallback () {
- 
-    }
-
     getValue () {
-
-      console.log('heeeelooo')
-      
       const currencyOne = this.firstCurrency.value
       const currencyTwo = this.secondCurrency.value
 
       fetch(`https://v6.exchangerate-api.com/v6/5f2e68170c627c6983e0a6f4/latest/${currencyOne}`)
         .then(res => res.json())
         .then(data => {
-          console.log(data)
-
           const rate = data.conversion_rates[currencyTwo]
-          console.log(rate)
           this.rateElement.innerText = `1 ${currencyOne} = ${rate} ${currencyTwo}`
-
-           this.secondAmount.value = (this.firstAmount.value * rate).toFixed(2)
+          this.secondAmount.value = (this.firstAmount.value * rate).toFixed(2)
         })
-
-
-      console.log(currencyOne)
-      console.log(currencyTwo)
     }
-
   })
