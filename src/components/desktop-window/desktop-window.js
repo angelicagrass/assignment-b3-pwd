@@ -10,6 +10,7 @@ template.innerHTML = `
   <button class="iconbtn" id="memory"></button>
   <button class="iconbtn" id="chat"></button>
   <button class="iconbtn" id="custom"></button>
+  <button class="iconbtn" id="exchange"></button>
   <my-clock></my-clock>
 </footer>
 
@@ -53,7 +54,7 @@ template.innerHTML = `
     color: white; 
   }
 
-  #memory, #chat, #custom {
+  #memory, #chat, #custom, #exchange {
     height: 60px;
     width: 60px;
     background-repeat: no-repeat;
@@ -94,10 +95,12 @@ customElements.define('desktop-window',
       this.createChatWindow = this.createChatWindow.bind(this)
       this.createMyOwnApp = this.createMyOwnApp.bind(this)
       this.getWindowToFront = this.getWindowToFront.bind(this)
+      this.createExchangeWindow = this.createExchangeWindow.bind(this)
 
       this.memoryBtn = this.shadowRoot.querySelector('#memory')
       this.chatBtn = this.shadowRoot.querySelector('#chat')
       this.customBtn = this.shadowRoot.querySelector('#custom')
+      this.exchangeBtn = this.shadowRoot.querySelector('#exchange')
       this.windowContainer = this.shadowRoot.querySelector('#windowcontainer')
       this.idCounter = 0
     }
@@ -133,6 +136,13 @@ customElements.define('desktop-window',
 
       
       })
+
+      this.exchangeBtn.addEventListener('click', () => {
+        console.log('exchange')
+        this.createExchangeWindow()
+
+
+      })
     }
 
     /**
@@ -151,6 +161,18 @@ customElements.define('desktop-window',
       this.windowContainer.addEventListener('click', (event) => {
         this.getWindowToFront(event)
       })
+    }
+
+    createExchangeWindow () {
+      const myWindow = document.createElement('my-window')
+      const exchangeElement = document.createElement('my-exchange')
+
+      this.windowContainer.appendChild(myWindow)
+      const y = myWindow.shadowRoot.querySelector('#content')
+      y.appendChild(exchangeElement)
+      y.style.minWidth = '600px'
+      y.style.minHeight = '700px'
+
     }
 
     /**

@@ -338,10 +338,9 @@ customElements.define('my-chat',
 
       if (existing) { // If username exists
         existing = JSON.parse(existing)
-        console.log(existing.username)
         this.userName = existing.username
         this.chatcontainer.classList.remove('hide')
-        this.shadowRoot.querySelector('#username').style.display = 'none'
+        this.shadowRoot.querySelector('#username').style.display = 'none' // Hide username choice
         this.wsConnect()
       } else {
         this.chatcontainer.classList.add('hide')
