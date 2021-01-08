@@ -3,26 +3,16 @@ import '../my-trophy/my-trophy.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
-
-
   <div id="scorecontainer">
     <h2 id="scoretext"></h2>
     <h2 id="score"></h2>
   </div>
-  
-
 <div id="grid" class="shufflecontainer">
-  
-
 </div>
-
 <div id="centertext">
-  
   <h2 id="winner"></h2>
   <h2 id="buttonheader">Choose the size of your game</h2>
 </div>
-
-
 <div id="buttons">
   <button id="fourxfour" class="sizebutton">4x4</button>
   <button id="fourxtwo" class="sizebutton">4x2</button>
@@ -30,13 +20,7 @@ template.innerHTML = `
 </div>
 <div id="resetBtnDiv">
   <button id="resetBtn" class="hidenone">Try Again!</button>
-
-
-
 <style>
-
-
-
 #centertext {
   text-align: center;
   width: 100%;
@@ -60,18 +44,17 @@ template.innerHTML = `
 #resetBtn {
   position: relative;
   padding: 16px 25px;
-	border-radius: 10px;
-	background-color: #7EBEA3;
+  border-radius: 10px;
+  background-color: #7EBEA3;
   font-weight: 600;
   border: none;
   border-bottom: 4px solid #53A08E;
   color: white;
-	font-size: larger;
-	transition-duration: 0.4s;
+  font-size: larger;
+  transition-duration: 0.4s;
   margin: 20px;
 
 }
-
 
 h2 {
   letter-spacing: 4px;
@@ -90,29 +73,29 @@ h2 {
     row-gap: 10px;
 }
 #grid2 {
-    visibility: hidden;
-    display: inline-grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 10px;
-    row-gap: 10px; 
+  visibility: hidden;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 10px; 
 
 }
 
 .resetgrid2 {
   display: inline-grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 10px;
-    row-gap: 10px; 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 10px;
+  row-gap: 10px; 
 }
 
- .hide {
+.hide {
    visibility: hidden;
    transition: 0.8s;
  }
 
- .hidenone {
+.hidenone {
   display: none;
 
  }
@@ -124,18 +107,16 @@ h2 {
 
  .sizebutton {
   padding: 32px 50px;
-	border-radius: 10px;
-	background-color: #7EBEA3;
+  border-radius: 10px;
+  background-color: #7EBEA3;
   font-weight: 600;
   border: none;
   border-bottom: 4px solid #53A08E;
   color: white;
-	font-size: larger;
-	transition-duration: 0.4s;
+  font-size: larger;
+  transition-duration: 0.4s;
   margin: 20px;
  }
-
-
 
  .scorecontainer {
    display: inline-block;
@@ -170,14 +151,21 @@ customElements.define('my-memory',
       this.howManyCards =
       this.flippedCardsNumber = []
       this.currentAttempts = 0
-      this.wincounter
+      this.wincounter = 0
     }
 
-    connectedCallback() {
+    /**
+     * Called when the custom element is inserted in the DOM.
+     */
+    connectedCallback () {
       this.container.addEventListener('click', (event) => {
+        console.log(event.target)
         if (event.target.id !== this.container.id) {
+          console.log(event.target)
           console.log('CLICK i MEMORY')
-          if (this.flippedCardsNumber.length < 3) {
+          if (this.flippedCardsNumber.length < 3 && !event.target.classList.contains('clicked')) {
+            event.target.classList.add('clicked')
+            console.log(event.target)
             const currentCard = event.target.attributes.cardname.value
             this.flippedCardsNumber.push(currentCard)
             this.compareCards()
@@ -213,10 +201,12 @@ customElements.define('my-memory',
       this.arrayOfImages()
     }
 
+    /**
+     * Removes eventlistener.
+     */
     disconnectedCallback () {
-      this.container.addEventListener('click', (event) => {
+      this.container.removeEventListener('click', (event) => {
         if (event.target.id !== this.container.id) {
-          console.log('CLICK i MEMORY')
           if (this.flippedCardsNumber.length < 3) {
             const currentCard = event.target.attributes.cardname.value
             this.flippedCardsNumber.push(currentCard)
@@ -224,19 +214,19 @@ customElements.define('my-memory',
           }
         }
       })
-      this.fourXfourBtn.addEventListener('click', () => {
+      this.fourXfourBtn.removeEventListener('click', () => {
         this.howManyCards = 8
         this.wincounter = 8
         this.arrayOfImages()
         this.startGameTable()
       })
-      this.fourXtwoBtn.addEventListener('click', () => {
+      this.fourXtwoBtn.removeEventListener('click', () => {
         this.howManyCards = 4
         this.wincounter = 4
         this.arrayOfImages()
         this.startGameTable()
       })
-      this.twoXtwoBtn.addEventListener('click', () => {
+      this.twoXtwoBtn.removeEventListener('click', () => {
         this.smallBoard = true
         this.howManyCards = 2
         this.wincounter = 2
@@ -245,48 +235,11 @@ customElements.define('my-memory',
         this.startGameTable()
       })
 
-      this.resetBtn.addEventListener('click', () => {
+      this.resetBtn.removeEventListener('click', () => {
         console.log('RESET')
         this.resetMemory()
       })
       this.arrayOfImages()
-    }
-
-    resetMemory () {
-      let trophy = this.shadowRoot.querySelector('my-trophy')
-      trophy.style.display = 'none'
-      let bigTable = this.shadowRoot.querySelector('#grid')
-      this.resetBtn.classList.add('hidenone')
-      this.winner.textContent = ''
-
-      if (this.howManyCards === 8) {
-        while (bigTable.firstChild) {
-          bigTable.removeChild(bigTable.lastChild)
-        }
-        bigTable.style.display = 'grid'
-        this.wincounter = 8
-        this.arrayOfImages()
-        this.startGameTable()
-        console.log('stora')
-      } else if (this.howManyCards === 4) {
-        this.shadowRoot.querySelector('#centertext').removeChild('my-trophy')
-        console.log('mellan')
-        this.wincounter = 4
-        this.arrayOfImages()
-        this.startGameTable()
-      } else if (this.howManyCards === 2) {
-        const gametable = this.shadowRoot.querySelector('#grid2')
-
-        while (gametable.firstChild) {
-          gametable.removeChild(gametable.lastChild)
-        }
-        gametable.style.display = 'inline-grid'
-        gametable.classList.add('resetgrid2')
-        this.howManyCards = 2
-        this.wincounter = 2
-        this.arrayOfImages()
-        this.startGameTable()
-      }
     }
 
     startGameTable () {
@@ -297,7 +250,7 @@ customElements.define('my-memory',
       this.scoreText.textContent = this.currentAttempts
     }
 
-    compareCards() {
+    compareCards () {
       if (this.flippedCardsNumber.length === 2) {
         if (this.flippedCardsNumber[0] === this.flippedCardsNumber[1]) {
           this.wincounter--
@@ -310,7 +263,6 @@ customElements.define('my-memory',
               const trophy = document.createElement('my-trophy')
               this.shadowRoot.querySelector('#centertext').appendChild(trophy)
             }, 2000)
-
             this.winner.textContent = 'WINNER'
           }
           let cardToHide
@@ -327,20 +279,30 @@ customElements.define('my-memory',
           setTimeout(() => {
             cardToHide.forEach((card) => {
               card.classList.add('hide')
+              card.classList.remove('clicked')
+              console.log(card)
             })
           }, 1500)
         } else {
+          // Removes classlist clicked from cards
+          let clickedCards
+          if (this.smallBoard === true) {
+            clickedCards = this.shadowRoot.querySelector('#grid2').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
+          } else {
+            clickedCards = this.shadowRoot.querySelector('#grid').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
+          }
+          clickedCards.forEach((card) => {
+            card.classList.remove('clicked')
+          })
           this.flippedCardsNumber = []
           this.currentAttempts++
           this.scoreText.textContent = this.currentAttempts
           this.shadowRoot.querySelector('my-card').setAttribute('makethemspin', 0)
         }
-      } else {
-        console.log('Inte två kort?')
       }
     }
 
-    arrayOfImages() {
+    arrayOfImages () {
       const imgArray = []
 
       for (let i = 0; i < this.howManyCards; i++) {
@@ -359,13 +321,48 @@ customElements.define('my-memory',
         }
       }
 
-      let parent = this.shadowRoot.querySelector('.shufflecontainer')
-      let divs = parent.children
-      let frag = document.createDocumentFragment()
+      const parent = this.shadowRoot.querySelector('.shufflecontainer')
+      const divs = parent.children
+      const frag = document.createDocumentFragment()
 
       while (divs.length) {
         frag.appendChild(divs[Math.floor(Math.random() * divs.length)])
       }
       parent.appendChild(frag)
+    }
+
+    resetMemory () {
+      const trophy = this.shadowRoot.querySelector('my-trophy')
+      trophy.style.display = 'none'
+      const bigTable = this.shadowRoot.querySelector('#grid')
+      this.resetBtn.classList.add('hidenone')
+      this.winner.textContent = ''
+
+      if (this.howManyCards === 8) {
+        while (bigTable.firstChild) {
+          bigTable.removeChild(bigTable.lastChild)
+        }
+        bigTable.style.display = 'grid'
+        this.wincounter = 8
+        this.arrayOfImages()
+        this.startGameTable()
+      } else if (this.howManyCards === 4) {
+        this.shadowRoot.querySelector('#centertext').removeChild('my-trophy')
+        this.wincounter = 4
+        this.arrayOfImages()
+        this.startGameTable()
+      } else if (this.howManyCards === 2) {
+        const gametable = this.shadowRoot.querySelector('#grid2')
+
+        while (gametable.firstChild) {
+          gametable.removeChild(gametable.lastChild)
+        }
+        gametable.style.display = 'inline-grid'
+        gametable.classList.add('resetgrid2')
+        this.howManyCards = 2
+        this.wincounter = 2
+        this.arrayOfImages()
+        this.startGameTable()
+      }
     }
   })

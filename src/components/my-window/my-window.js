@@ -17,8 +17,8 @@ template.innerHTML = `
 
   #mydiv {
     /* min-margin: 2px; */
-    top: 20%;
-    left: 40%;
+    top: 10%;
+    left: 10%;
     height: min-content;
     width: min-content;
     border-radius: 5px;
@@ -60,14 +60,10 @@ template.innerHTML = `
     margin-right: auto;
     overflow: auto;
     padding: 20px;
-
-
-    
   }
 
   </style>
 `
-
 customElements.define('my-window',
   class extends HTMLElement {
     constructor () {
@@ -82,6 +78,9 @@ customElements.define('my-window',
       this.closeBtn = this.shadowRoot.querySelector('#close')
     }
 
+    /**
+     * Called when the custom element is inserted in the DOM.
+     */
     connectedCallback () {
       this.dragElement(this.element)
       this.closeBtn.addEventListener('click', (event) => {
@@ -94,21 +93,16 @@ customElements.define('my-window',
      * Removes eventlistener.
      */
     disconnectedCallback () {
+      this.dragElement(this.element)
       this.closeBtn.removeEventListener('click', () => {
         this.remove()
       })
     }
 
     removeWindow() {
-
-      let myWindow = this.shadowRoot.querySelector('#mydiv')
-
-      let test = myWindow.getRootNode().host
-      
-      console.log(myWindow.getRootNode().host)
-
+      const myWindow = this.shadowRoot.querySelector('#mydiv')
+      const test = myWindow.getRootNode().host
       test.remove()
-      // test.remove()
     }
 
     dragElement (elmnt) {
@@ -121,6 +115,7 @@ customElements.define('my-window',
       } else {
         console.log(`#${elmnt.id}header`)
       }
+
       function dragMouseDown(e) {
         e = e || window.event
         e.preventDefault()

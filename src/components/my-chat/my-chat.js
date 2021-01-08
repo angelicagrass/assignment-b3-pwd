@@ -257,13 +257,13 @@ customElements.define('my-chat',
      */
     disconnectedCallback () {
       this.chatStart()
-      this.form.addEventListener('click', () => {
+      this.form.removeEventListener('click', () => {
         this.form.focus()
       })
-      this.slide.addEventListener('click', () => {
+      this.slide.removeEventListener('click', () => {
         this.darkModeToggle()
       })
-      this.nameBtn.addEventListener('click', (event) => {
+      this.nameBtn.removeEventListener('click', (event) => {
         event.preventDefault()
         this.setUserName()
       })

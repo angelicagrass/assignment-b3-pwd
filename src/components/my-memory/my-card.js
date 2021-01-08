@@ -92,7 +92,6 @@ customElements.define('my-card',
 
     attributeChangedCallback (name, oldValue, newValue) {
       if (name === 'makethemspin') {
-        console.log('makethemspin!')
         this.unflipCards()
       }
       if (name === 'activediv') {
@@ -104,12 +103,13 @@ customElements.define('my-card',
      * Called when the custom element is inserted in the DOM.
      */
     connectedCallback () {
-      console.log()
+      this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       this.theCard.addEventListener('click', (e) => {
         e.preventDefault()
         this.selectedCardsCount++
         this.theCard.classList.add('selected')
-        this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
+        // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
+        console.log(this.currentid)
       })
     }
 
@@ -119,7 +119,7 @@ customElements.define('my-card',
     disconnectedCallback () {
       this.theCard.removeEventListener('click', () => {
         this.theCard.classList.add('selected')
-        this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
+        // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       })
     }
 

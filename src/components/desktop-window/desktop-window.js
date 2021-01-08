@@ -14,9 +14,7 @@ template.innerHTML = `
   <my-clock></my-clock>
 </footer>
 
-
 <style>
-
   #pwdapp {
     width: 100%;
     height: 100vh;
@@ -79,6 +77,10 @@ template.innerHTML = `
     background: url('./img/quote-icon.png');
     background-repeat: no-repeat; 
   }
+  #exchange {
+    background: url('./img/currency-icon.png');
+    background-repeat: no-repeat; 
+  }
 
   </style>
 `
@@ -119,29 +121,10 @@ customElements.define('desktop-window',
         this.createMyOwnApp()
       })
       this.windowContainer.addEventListener('click', (event) => {
-
-
-
-
-        // stäng knappen
-        // let closeBtn = this.shadowRoot.querySelector('my-window').shadowRoot.querySelector('#close')
-
-        
-
-   
-          this.getWindowToFront(event)
-
-
-
-
-      
+        this.getWindowToFront(event)
       })
-
       this.exchangeBtn.addEventListener('click', () => {
-        console.log('exchange')
         this.createExchangeWindow()
-
-
       })
     }
 
@@ -149,20 +132,27 @@ customElements.define('desktop-window',
      * Removes eventlistener.
      */
     disconnectedCallback () {
-      this.memoryBtn.addEventListener('click', () => {
+      this.memoryBtn.removeEventListener('click', () => {
         this.createMemoryWindow()
       })
-      this.chatBtn.addEventListener('click', () => {
+      this.chatBtn.removeEventListener('click', () => {
         this.createChatWindow()
       })
-      this.customBtn.addEventListener('click', () => {
+      this.customBtn.removeEventListener('click', () => {
         this.createMyOwnApp()
       })
-      this.windowContainer.addEventListener('click', (event) => {
+      this.windowContainer.removeEventListener('click', (event) => {
         this.getWindowToFront(event)
+      })
+      this.exchangeBtn.removeEventListener('click', () => {
+        this.createExchangeWindow()
       })
     }
 
+    /**
+     * Creates window with currency calculator.
+     *
+     */
     createExchangeWindow () {
       const myWindow = document.createElement('my-window')
       const exchangeElement = document.createElement('my-exchange')
@@ -172,7 +162,6 @@ customElements.define('desktop-window',
       y.appendChild(exchangeElement)
       y.style.minWidth = '600px'
       y.style.minHeight = '700px'
-
     }
 
     /**
@@ -184,13 +173,11 @@ customElements.define('desktop-window',
       const x = document.createElement('my-window')
       const memory = document.createElement('my-memory')
       x.id = 'memory' + this.idCounter
-      // x.shadowRoot.querySelector('#mydiv').querySelector('#mydivheader').innerText = 'Memory'
       this.windowContainer.appendChild(x)
       const y = x.shadowRoot.querySelector('#content')
       y.appendChild(memory)
       y.style.minWidth = '600px'
       y.style.minHeight = '700px'
-      
     }
 
     /**
@@ -203,7 +190,6 @@ customElements.define('desktop-window',
       this.windowContainer.appendChild(x)
       const y = x.shadowRoot.querySelector('#content')
       y.appendChild(chat)
-      
     }
 
     /**
@@ -227,14 +213,13 @@ customElements.define('desktop-window',
      */
     getWindowToFront (event) {
       const y = this.shadowRoot.querySelectorAll('my-window')
-
-      // z-index fungerar ej än!
+      // All windows z-index is set to 10 & the clicked windows z-index is set to 100
       y.forEach(element => {
-        let myDiv = element.shadowRoot.querySelector('#mydiv')
-        myDiv.style.zIndex = '10' // alla fönster får 10
+        const myDiv = element.shadowRoot.querySelector('#mydiv')
+        myDiv.style.zIndex = '10' 
       })
-      const x = event.target // den som klickas får 100
-      let clickeddiv = x.shadowRoot.querySelector('#mydiv')
+      const x = event.target
+      const clickeddiv = x.shadowRoot.querySelector('#mydiv')
       clickeddiv.style.zIndex = '100'
     }
   })

@@ -1,7 +1,10 @@
+// from tutorial: https://www.udemy.com/course/web-projects-with-vanilla-javascript/learn/lecture/17842134#content
+
+
 const template = document.createElement('template')
 template.innerHTML = `
- <img src="" alt="moneysymbol" class="moneyimg">
-  <h1>Exchange Rate Calculator</h1>
+ <img src="./img/currency.png" alt="moneysymbol" class="moneyimg">
+  <h1>Currency Converter</h1>
     <p>Choose the currency and the amounts to get exchange rate</p>
   <div class="container">
     <div class="currency">
@@ -246,10 +249,10 @@ customElements.define('my-exchange',
      * Removes connectedCallback.
      */
     disconnectedCallback () {
-      this.firstCurrency.addEventListener('change', this.getValue)
-      this.secondCurrency.addEventListener('change', this.getValue)
-      this.firstAmount.addEventListener('input', this.getValue)
-      this.secondAmount.addEventListener('input', this.getValue)
+      this.firstCurrency.removeEventListener('change', this.getValue)
+      this.secondCurrency.removeEventListener('change', this.getValue)
+      this.firstAmount.removeEventListener('input', this.getValue)
+      this.secondAmount.removeEventListener('input', this.getValue)
     }
 
     /**
