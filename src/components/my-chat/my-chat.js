@@ -368,6 +368,10 @@ customElements.define('my-chat',
         console.log('WE ARE CONNECTED')
       })
 
+      ws.addEventListener('close', () => {
+        console.log('WE ARE NOT CONNECTED')
+      })
+
       ws.addEventListener('message', ({ data }) => {
         console.log(data)
         const li = document.createElement('li')

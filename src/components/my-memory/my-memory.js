@@ -21,6 +21,7 @@ template.innerHTML = `
 <div id="resetBtnDiv">
   <button id="resetBtn" class="hidenone">Try Again!</button>
 <style>
+
 #centertext {
   text-align: center;
   width: 100%;
@@ -61,7 +62,6 @@ h2 {
   font-weight: 100;
   font-size: 30px;
   display: inline;
-  
 }
 
 #grid {
@@ -79,7 +79,6 @@ h2 {
   grid-template-rows: 1fr 1fr;
   column-gap: 10px;
   row-gap: 10px; 
-
 }
 
 .resetgrid2 {
@@ -147,6 +146,7 @@ customElements.define('my-memory',
       this.headerText = this.shadowRoot.querySelector('#scoretext')
       this.btnHeader = this.shadowRoot.querySelector('#buttonheader')
       this.resetBtn = this.shadowRoot.querySelector('#resetBtn')
+      this.selectedCardsCount = 0
       this.smallBoard = false
       this.howManyCards =
       this.flippedCardsNumber = []
@@ -160,15 +160,25 @@ customElements.define('my-memory',
     connectedCallback () {
       this.container.addEventListener('click', (event) => {
         console.log(event.target)
+
+        this.selectedCardsCount++
+
+        if (this.selectedCardsCount < 3) {
+          let theCard = event.target.shadowRoot.querySelector('#theCard')
+          theCard.classList.add('selected')
+        }
+
+
         if (event.target.id !== this.container.id) {
-          console.log(event.target)
-          console.log('CLICK i MEMORY')
-          if (this.flippedCardsNumber.length < 3 && !event.target.classList.contains('clicked')) {
+          if (this.flippedCardsNumber.length < 2 && !event.target.classList.contains('clicked')) {
             event.target.classList.add('clicked')
-            console.log(event.target)
+
             const currentCard = event.target.attributes.cardname.value
             this.flippedCardsNumber.push(currentCard)
-            this.compareCards()
+
+            if (this.flippedCardsNumber.length === 2) {
+              this.compareCards()
+            }
           }
         }
       })
@@ -205,41 +215,41 @@ customElements.define('my-memory',
      * Removes eventlistener.
      */
     disconnectedCallback () {
-      this.container.removeEventListener('click', (event) => {
-        if (event.target.id !== this.container.id) {
-          if (this.flippedCardsNumber.length < 3) {
-            const currentCard = event.target.attributes.cardname.value
-            this.flippedCardsNumber.push(currentCard)
-            this.compareCards()
-          }
-        }
-      })
-      this.fourXfourBtn.removeEventListener('click', () => {
-        this.howManyCards = 8
-        this.wincounter = 8
-        this.arrayOfImages()
-        this.startGameTable()
-      })
-      this.fourXtwoBtn.removeEventListener('click', () => {
-        this.howManyCards = 4
-        this.wincounter = 4
-        this.arrayOfImages()
-        this.startGameTable()
-      })
-      this.twoXtwoBtn.removeEventListener('click', () => {
-        this.smallBoard = true
-        this.howManyCards = 2
-        this.wincounter = 2
-        this.arrayOfImages()
-        this.container.setAttribute('id', 'grid2')
-        this.startGameTable()
-      })
+      // this.container.removeEventListener('click', (event) => {
+      //   if (event.target.id !== this.container.id) {
+      //     if (this.flippedCardsNumber.length < 3) {
+      //       const currentCard = event.target.attributes.cardname.value
+      //       this.flippedCardsNumber.push(currentCard)
+      //       this.compareCards()
+      //     }
+      //   }
+      // })
+      // this.fourXfourBtn.removeEventListener('click', () => {
+      //   this.howManyCards = 8
+      //   this.wincounter = 8
+      //   this.arrayOfImages()
+      //   this.startGameTable()
+      // })
+      // this.fourXtwoBtn.removeEventListener('click', () => {
+      //   this.howManyCards = 4
+      //   this.wincounter = 4
+      //   this.arrayOfImages()
+      //   this.startGameTable()
+      // })
+      // this.twoXtwoBtn.removeEventListener('click', () => {
+      //   this.smallBoard = true
+      //   this.howManyCards = 2
+      //   this.wincounter = 2
+      //   this.arrayOfImages()
+      //   this.container.setAttribute('id', 'grid2')
+      //   this.startGameTable()
+      // })
 
-      this.resetBtn.removeEventListener('click', () => {
-        console.log('RESET')
-        this.resetMemory()
-      })
-      this.arrayOfImages()
+      // this.resetBtn.removeEventListener('click', () => {
+      //   console.log('RESET')
+      //   this.resetMemory()
+      // })
+      // this.arrayOfImages()
     }
 
     startGameTable () {
@@ -279,17 +289,15 @@ customElements.define('my-memory',
           setTimeout(() => {
             cardToHide.forEach((card) => {
               card.classList.add('hide')
-              card.classList.remove('clicked')
-              console.log(card)
             })
           }, 1500)
         } else {
-          // Removes classlist clicked from cards
+          console.log('hej')
           let clickedCards
           if (this.smallBoard === true) {
-            clickedCards = this.shadowRoot.querySelector('#grid2').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
+            clickedCards = this.shadowRoot.querySelector('#grid2').querySelectorAll('my-card')
           } else {
-            clickedCards = this.shadowRoot.querySelector('#grid').querySelectorAll(`[cardname=${this.flippedCardsNumber[1]}]`)
+            clickedCards = this.shadowRoot.querySelector('#grid').querySelectorAll('my-card')
           }
           clickedCards.forEach((card) => {
             card.classList.remove('clicked')
@@ -299,6 +307,9 @@ customElements.define('my-memory',
           this.scoreText.textContent = this.currentAttempts
           this.shadowRoot.querySelector('my-card').setAttribute('makethemspin', 0)
         }
+        setTimeout(() => {
+          this.selectedCardsCount = 0
+        }, 2000)
       }
     }
 

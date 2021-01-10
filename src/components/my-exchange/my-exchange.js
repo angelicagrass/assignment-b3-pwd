@@ -249,10 +249,10 @@ customElements.define('my-exchange',
      * Removes connectedCallback.
      */
     disconnectedCallback () {
-      this.firstCurrency.removeEventListener('change', this.getValue)
-      this.secondCurrency.removeEventListener('change', this.getValue)
-      this.firstAmount.removeEventListener('input', this.getValue)
-      this.secondAmount.removeEventListener('input', this.getValue)
+      // this.firstCurrency.removeEventListener('change', this.getValue)
+      // this.secondCurrency.removeEventListener('change', this.getValue)
+      // this.firstAmount.removeEventListener('input', this.getValue)
+      // this.secondAmount.removeEventListener('input', this.getValue)
     }
 
     /**

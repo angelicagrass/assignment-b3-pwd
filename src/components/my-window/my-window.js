@@ -3,17 +3,11 @@ import '../my-memory/my-memory.js'
 const template = document.createElement('template')
 template.innerHTML = `
 <div id="mydiv">
-<div id="mydivheader">Window<button id="close"></button></div>
-<div id="content"></div>
-  
+  <div id="mydivheader">Window<button id="close"></button></div>
+  <div id="content" tabindex="-1"></div>
 </div>
 
 <style>
-  /* :host {
-
-    position: absolute;
-    z-index: 9;
-  } */
 
   #mydiv {
     /* min-margin: 2px; */

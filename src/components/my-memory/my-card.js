@@ -1,6 +1,7 @@
 const template = document.createElement('template')
-template.innerHTML = ` 
-<div id="theCard">
+template.innerHTML = `
+<form> 
+<button id="theCard">
   <div  id="flip-card-inner">
     <div id="front"> 
       <img id="firstpic" src="./img/0.png" alt="LNU">  
@@ -9,7 +10,8 @@ template.innerHTML = `
     <img class="mariopic" >     
    </div>
   </div>  
-</div>
+</button>
+</form>
 
 <style>
 
@@ -17,7 +19,7 @@ template.innerHTML = `
       background-color: transparent;
       width: 200px;
       height: 200px;
-      /* border: 1px solid #f1f1f1; */
+      border: none;
       perspective: 1000px;
     }
 
@@ -106,10 +108,10 @@ customElements.define('my-card',
       this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       this.theCard.addEventListener('click', (e) => {
         e.preventDefault()
-        this.selectedCardsCount++
-        this.theCard.classList.add('selected')
+
+
+        // this.theCard.classList.add('selected')
         // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
-        console.log(this.currentid)
       })
     }
 
@@ -117,13 +119,13 @@ customElements.define('my-card',
      * Removes connectedCallback.
      */
     disconnectedCallback () {
-      this.theCard.removeEventListener('click', () => {
-        this.theCard.classList.add('selected')
-        // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
-      })
+      // this.theCard.removeEventListener('click', () => {
+      //   this.theCard.classList.add('selected')
+      //   // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
+      // })
     }
 
-    unflipCards() {
+    unflipCards () {
       setTimeout(() => {
         console.log(this.currentid)
         const cards = document.querySelector('desktop-window')
@@ -137,6 +139,7 @@ customElements.define('my-card',
 
         cards.forEach((card) => {
           card.shadowRoot.querySelector('#theCard').classList.remove('selected')
+          // card.shadowRoot.querySelector('#theCard').classList.remove('clicked')
         })
       }, 2000)
     }
