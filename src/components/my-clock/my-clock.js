@@ -1,3 +1,4 @@
+
 const template = document.createElement('template')
 template.innerHTML = ` 
 <div id="clockcontainer" class="clock" onload="showTime()">
@@ -17,8 +18,14 @@ template.innerHTML = `
 `
 
 customElements.define('my-clock',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+    /**
+     * Creates an instance of the current type.
+     */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
@@ -41,6 +48,9 @@ customElements.define('my-clock',
       this.showTime()
     }
 
+    /**
+     * Creates a digital clock.
+     */
     showTime () {
       // code src = https://codepen.io/afarrar/pen/JRaEjP
       const date = new Date()

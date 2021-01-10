@@ -1,3 +1,13 @@
+/**
+ * The my-card web component module.
+ *
+ * @author Angelica Grass <ag223vg@student.lnu.se>
+ * @version 1.0.0
+ */
+
+/**
+ * Define template.
+ */
 const template = document.createElement('template')
 template.innerHTML = `
 <form> 
@@ -6,7 +16,7 @@ template.innerHTML = `
     <div id="front"> 
       <img id="firstpic" src="./img/0.png" alt="LNU">  
     </div>
-   <div id="back">
+    <div id="back">
     <img class="mariopic" >     
    </div>
   </div>  
@@ -20,6 +30,7 @@ template.innerHTML = `
       width: 200px;
       height: 200px;
       border: none;
+      padding: 0;
       perspective: 1000px;
     }
 
@@ -67,8 +78,14 @@ template.innerHTML = `
 `
 
 customElements.define('my-card',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+    /**
+     * Creates an instance of the current type.
+     */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
@@ -85,13 +102,25 @@ customElements.define('my-card',
       this.selectedCardsCount = 0
       this.cards = []
       this.y = []
-      this.currentid
+      this.currentid = ''
     }
 
+    /**
+     * Watches the attributes "makethemspin" and "activediv" for changes on the element.
+     *
+     * @returns {string[]} A string array of attributes to monitor.
+     */
     static get observedAttributes () {
       return ['makethemspin', 'activediv']
     }
 
+    /**
+     * Called by the browser engine when an attribute changes.
+     *
+     * @param {string} name of the attribute.
+     * @param {any} oldValue the old attribute value.
+     * @param {any} newValue the new attribute value.
+     */
     attributeChangedCallback (name, oldValue, newValue) {
       if (name === 'makethemspin') {
         this.unflipCards()
@@ -108,10 +137,6 @@ customElements.define('my-card',
       this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       this.theCard.addEventListener('click', (e) => {
         e.preventDefault()
-
-
-        // this.theCard.classList.add('selected')
-        // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
       })
     }
 
@@ -119,12 +144,15 @@ customElements.define('my-card',
      * Removes connectedCallback.
      */
     disconnectedCallback () {
-      // this.theCard.removeEventListener('click', () => {
-      //   this.theCard.classList.add('selected')
-      //   // this.currentid = this.parentNode.parentNode.host.parentNode.parentNode.parentNode.host.id
-      // })
+      this.theCard.removeEventListener('click', () => {
+        this.theCard.classList.add('selected')
+      })
     }
 
+    /**
+     * Flips the cards by removing the class selected.
+     *
+     */
     unflipCards () {
       setTimeout(() => {
         console.log(this.currentid)
@@ -139,7 +167,6 @@ customElements.define('my-card',
 
         cards.forEach((card) => {
           card.shadowRoot.querySelector('#theCard').classList.remove('selected')
-          // card.shadowRoot.querySelector('#theCard').classList.remove('clicked')
         })
       }, 2000)
     }

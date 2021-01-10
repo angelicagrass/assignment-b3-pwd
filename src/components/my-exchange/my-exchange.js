@@ -1,6 +1,14 @@
-// from tutorial: https://www.udemy.com/course/web-projects-with-vanilla-javascript/learn/lecture/17842134#content
+/**
+ * The my-exchange web component module.
+ *
+ * @author Angelica Grass <ag223vg@student.lnu.se>
+ * @version 1.0.0
+ */
 
-
+/**
+ * Define template.
+ * from tutorial: https://www.udemy.com/course/web-projects-with-vanilla-javascript/learn/lecture/17842134#content
+ */
 const template = document.createElement('template')
 template.innerHTML = `
  <img src="./img/currency.png" alt="moneysymbol" class="moneyimg">
@@ -210,8 +218,14 @@ select:focus, input:focus, button:focus {
 `
 
 customElements.define('my-exchange',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+  /**
+   * Creates an instance of the current type.
+   */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
@@ -238,21 +252,25 @@ customElements.define('my-exchange',
       this.swapBtn.addEventListener('click', () => {
         const temp = this.firstCurrency.value
         this.firstCurrency.value = this.secondCurrency.value
-
         this.secondCurrency.value = temp
         this.getValue()
-
       })
     }
 
     /**
-     * Removes connectedCallback.
+     * Called after the element has been removed from the DOM.
      */
     disconnectedCallback () {
-      // this.firstCurrency.removeEventListener('change', this.getValue)
-      // this.secondCurrency.removeEventListener('change', this.getValue)
-      // this.firstAmount.removeEventListener('input', this.getValue)
-      // this.secondAmount.removeEventListener('input', this.getValue)
+      this.firstCurrency.removeEventListener('change', this.getValue)
+      this.secondCurrency.removeEventListener('change', this.getValue)
+      this.firstAmount.removeEventListener('input', this.getValue)
+      this.secondAmount.removeEventListener('input', this.getValue)
+      this.swapBtn.removeEventListener('click', () => {
+        const temp = this.firstCurrency.value
+        this.firstCurrency.value = this.secondCurrency.value
+        this.secondCurrency.value = temp
+        this.getValue()
+      })
     }
 
     /**

@@ -1,6 +1,16 @@
+/**
+ * The my-memory web component module.
+ *
+ * @author Angelica Grass <ag223vg@student.lnu.se>
+ * @version 1.0.0
+ */
+
 import './my-card.js'
 import '../my-trophy/my-trophy.js'
 
+/**
+ * Define template.
+ */
 const template = document.createElement('template')
 template.innerHTML = `
   <div id="scorecontainer">
@@ -28,6 +38,7 @@ template.innerHTML = `
   justify-content: center;
   height: 50px;
   margin-top: 20px;
+
 }
 
 #scorecontainer {
@@ -124,8 +135,14 @@ h2 {
 `
 
 customElements.define('my-memory',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+    /**
+     * Creates an instance of the current type.
+     */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
@@ -167,7 +184,6 @@ customElements.define('my-memory',
           let theCard = event.target.shadowRoot.querySelector('#theCard')
           theCard.classList.add('selected')
         }
-
 
         if (event.target.id !== this.container.id) {
           if (this.flippedCardsNumber.length < 2 && !event.target.classList.contains('clicked')) {
@@ -212,46 +228,49 @@ customElements.define('my-memory',
     }
 
     /**
-     * Removes eventlistener.
+     * Called after the element has been removed from the DOM.
      */
     disconnectedCallback () {
-      // this.container.removeEventListener('click', (event) => {
-      //   if (event.target.id !== this.container.id) {
-      //     if (this.flippedCardsNumber.length < 3) {
-      //       const currentCard = event.target.attributes.cardname.value
-      //       this.flippedCardsNumber.push(currentCard)
-      //       this.compareCards()
-      //     }
-      //   }
-      // })
-      // this.fourXfourBtn.removeEventListener('click', () => {
-      //   this.howManyCards = 8
-      //   this.wincounter = 8
-      //   this.arrayOfImages()
-      //   this.startGameTable()
-      // })
-      // this.fourXtwoBtn.removeEventListener('click', () => {
-      //   this.howManyCards = 4
-      //   this.wincounter = 4
-      //   this.arrayOfImages()
-      //   this.startGameTable()
-      // })
-      // this.twoXtwoBtn.removeEventListener('click', () => {
-      //   this.smallBoard = true
-      //   this.howManyCards = 2
-      //   this.wincounter = 2
-      //   this.arrayOfImages()
-      //   this.container.setAttribute('id', 'grid2')
-      //   this.startGameTable()
-      // })
+      this.container.removeEventListener('click', (event) => {
+        if (event.target.id !== this.container.id) {
+          if (this.flippedCardsNumber.length < 3) {
+            const currentCard = event.target.attributes.cardname.value
+            this.flippedCardsNumber.push(currentCard)
+            this.compareCards()
+          }
+        }
+      })
+      this.fourXfourBtn.removeEventListener('click', () => {
+        this.howManyCards = 8
+        this.wincounter = 8
+        this.arrayOfImages()
+        this.startGameTable()
+      })
+      this.fourXtwoBtn.removeEventListener('click', () => {
+        this.howManyCards = 4
+        this.wincounter = 4
+        this.arrayOfImages()
+        this.startGameTable()
+      })
+      this.twoXtwoBtn.removeEventListener('click', () => {
+        this.smallBoard = true
+        this.howManyCards = 2
+        this.wincounter = 2
+        this.arrayOfImages()
+        this.container.setAttribute('id', 'grid2')
+        this.startGameTable()
+      })
 
-      // this.resetBtn.removeEventListener('click', () => {
-      //   console.log('RESET')
-      //   this.resetMemory()
-      // })
-      // this.arrayOfImages()
+      this.resetBtn.removeEventListener('click', () => {
+        console.log('RESET')
+        this.resetMemory()
+      })
+      this.arrayOfImages()
     }
 
+    /**
+     * Set up the game.
+     */
     startGameTable () {
       this.container.style.visibility = 'visible'
       this.btnContainer.style.display = 'none'
@@ -260,6 +279,9 @@ customElements.define('my-memory',
       this.scoreText.textContent = this.currentAttempts
     }
 
+    /**
+     * Compares the cards and flipp them back or hides them if they are a match.
+     */
     compareCards () {
       if (this.flippedCardsNumber.length === 2) {
         if (this.flippedCardsNumber[0] === this.flippedCardsNumber[1]) {
@@ -313,6 +335,9 @@ customElements.define('my-memory',
       }
     }
 
+    /**
+     * Creates memorycards with images.
+     */
     arrayOfImages () {
       const imgArray = []
 
@@ -342,6 +367,9 @@ customElements.define('my-memory',
       parent.appendChild(frag)
     }
 
+    /**
+     * Reset game without reload.
+     */
     resetMemory () {
       const trophy = this.shadowRoot.querySelector('my-trophy')
       trophy.style.display = 'none'

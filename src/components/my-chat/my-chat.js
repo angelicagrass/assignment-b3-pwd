@@ -29,17 +29,15 @@ template.innerHTML = `
 
 <style>
 
-  textarea 
-    {
-      resize: none;
-      border: 1px solid lightgrey;
-      width: 100%;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+  textarea {
+  resize: none;
+  border: 1px solid lightgrey;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
     
-
   #switchemoji {
     display: inline-block;
     position: relative;
@@ -78,7 +76,6 @@ template.innerHTML = `
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -207,8 +204,14 @@ input:checked + .slider:before {
 `
 
 customElements.define('my-chat',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+    /**
+     * Creates an instance of the current type.
+     */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
@@ -224,7 +227,6 @@ customElements.define('my-chat',
 
       this.nameBtn = this.shadowRoot.querySelector('#namebtn')
       this.inputName = this.shadowRoot.querySelector('#usernamefield')
-      this.form = this.shadowRoot.querySelector('form')
       this.chatcontainer = this.shadowRoot.querySelector('#chatten')
       this.slide = this.shadowRoot.querySelector('#mycheck')
       this.allArea = this.shadowRoot.querySelectorAll('.slidedark')
@@ -239,10 +241,6 @@ customElements.define('my-chat',
     connectedCallback () {
       this.emojiPicker()
       this.chatStart()
-      this.form.addEventListener('click', () => {
-        // Fungerar ej?
-        this.form.focus()
-      })
       this.slide.addEventListener('click', () => {
         this.darkModeToggle()
       })
@@ -257,9 +255,6 @@ customElements.define('my-chat',
      */
     disconnectedCallback () {
       this.chatStart()
-      this.form.removeEventListener('click', () => {
-        this.form.focus()
-      })
       this.slide.removeEventListener('click', () => {
         this.darkModeToggle()
       })

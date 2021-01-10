@@ -1,7 +1,17 @@
+/**
+ * The desktop-window web component module.
+ *
+ * @author Angelica Grass <ag223vg@student.lnu.se>
+ * @version 1.0.0
+ */
+
 import '../my-window/my-window.js'
 import '../my-memory/my-memory.js'
 import '../my-clock/my-clock.js'
 
+/**
+ * Define template.
+ */
 const template = document.createElement('template')
 template.innerHTML = `
 <div id="pwdapp"></div>
@@ -81,13 +91,18 @@ template.innerHTML = `
     background: url('./img/currency-icon.png');
     background-repeat: no-repeat; 
   }
-
   </style>
 `
 
 customElements.define('desktop-window',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+    /**
+     * Creates an instance of the current type.
+     */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
