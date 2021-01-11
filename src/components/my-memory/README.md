@@ -17,6 +17,9 @@ Creates the custom element My-card with picture from the array depending on how 
 ### resetMemory
 Lets the user reset the memeory if they like to try again without reloading the application.
 
+### darkmode
+Toggles between darkmode and lightmode
+
 
 Styling with CSS
 

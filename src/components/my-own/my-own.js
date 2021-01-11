@@ -161,7 +161,6 @@ customElements.define('my-own',
 
       this.quotesOnScreen = this.quotesOnScreen.bind(this)
       this.randomBackground = this.randomBackground.bind(this)
-      this.saveToLocaleStorage = this.saveToLocaleStorage.bind(this)
 
       this.image =
       this.currentQuote = ''
@@ -225,7 +224,7 @@ customElements.define('my-own',
      */
     async funnyQuotes () {
       this.btnContainer.classList.add('hide')
-      let fadeText = this.shadowRoot.querySelector('#quotetext')
+      const fadeText = this.shadowRoot.querySelector('#quotetext')
       fadeText.classList.remove('fade-out')
       fadeText.classList.add('fade-in')
 
@@ -259,7 +258,7 @@ customElements.define('my-own',
       }
       if (this.firstImage === true) {
         this.firstImage = false
-        let el = document.createElement('img')
+        const el = document.createElement('img')
         el.src = `${this.image}`
         el.classList.add('myimg')
         this.myContainer.appendChild(el)

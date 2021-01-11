@@ -21,8 +21,8 @@ template.innerHTML = `
 <style>
 
   #mydiv {
-    top: 10%;
-    left: 10%;
+    top: 5%;
+    left: 5%;
     height: min-content;
     width: min-content;
     border-radius: 5px;
@@ -158,8 +158,8 @@ customElements.define('my-window',
         pos3 = e.clientX
         pos4 = e.clientY
         // set the element's new position:
-        elmnt.style.top = (elmnt.offsetTop - pos2) + "px"
-        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px"
+        elmnt.style.top = (elmnt.offsetTop - pos2) + 'px'
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + 'px'
       }
       /**
        * Moves the element on mousedown.
