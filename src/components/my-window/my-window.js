@@ -1,5 +1,16 @@
+
+/**
+ * The my-window web component module.
+ *
+ * @author Angelica Grass <ag223vg@student.lnu.se>
+ * @version 1.0.0
+ */
+
 import '../my-memory/my-memory.js'
 
+/**
+ * Define template.
+ */
 const template = document.createElement('template')
 template.innerHTML = `
 <div id="mydiv">
@@ -10,28 +21,21 @@ template.innerHTML = `
 <style>
 
   #mydiv {
-    /* min-margin: 2px; */
     top: 10%;
     left: 10%;
     height: min-content;
     width: min-content;
     border-radius: 5px;
     border: solid 1px #e2e2e2;
-    /* z-index: 10;  */
-    /* max-height: 1000px;
-    max-width: 1000px; */
     background-color: white;
-    /* opacity: 0.99; */
     z-index: 100;
     position: absolute;
-    /* resize: both; */
     overflow: scroll;
   }
 
   #mydivheader {
     padding: 10px;
     cursor: move;
-    /* z-index: 10; */
     background-color: #413D3D;
     color: #fff;
   }
@@ -48,8 +52,6 @@ template.innerHTML = `
   }
 
   #content {
-    /* min-height: 700px;
-    min-width: 600px; */
     margin-left: auto;
     margin-right: auto;
     overflow: auto;
@@ -59,7 +61,13 @@ template.innerHTML = `
   </style>
 `
 customElements.define('my-window',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
+    /**
+     * Creates an instance of the current type.
+     */
     constructor () {
       super()
 
@@ -93,16 +101,27 @@ customElements.define('my-window',
       })
     }
 
-    removeWindow() {
+    /**
+     * Removes the window.
+     */
+    removeWindow () {
       const myWindow = this.shadowRoot.querySelector('#mydiv')
       const test = myWindow.getRootNode().host
       test.remove()
     }
 
+    /**
+     * Moves the element on mousedown.
+     *
+     * @param {string} elmnt the element to move.
+     */
     dragElement (elmnt) {
       // code credit --> https://www.w3schools.com/howto/howto_js_draggable.asp
       console.log(this.shadowRoot.querySelector(`#${elmnt.id}header`))
-      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0
+      let pos1 = 0
+      let pos2 = 0
+      let pos3 = 0
+      let pos4 = 0
       if (this.shadowRoot.querySelector(`#${elmnt.id}header`)) {
         // if present, the header is where you move the DIV from:
         this.shadowRoot.querySelector(`#${elmnt.id}header`).onmousedown = dragMouseDown
@@ -110,7 +129,12 @@ customElements.define('my-window',
         console.log(`#${elmnt.id}header`)
       }
 
-      function dragMouseDown(e) {
+      /**
+       * Moves the element on mousedown.
+       *
+       * @param {string} e the element to move.
+       */
+      function dragMouseDown (e) {
         e = e || window.event
         e.preventDefault()
         // get the mouse cursor position at startup:
@@ -120,8 +144,12 @@ customElements.define('my-window',
         // call a function whenever the cursor moves:
         document.onmousemove = elementDrag
       }
-    
-      function elementDrag(e) {
+      /**
+       * Moves the element on mousedown.
+       *
+       * @param {*} e - the element to move.
+       */
+      function elementDrag (e) {
         e = e || window.event
         e.preventDefault()
         // calculate the new cursor position:
@@ -133,7 +161,10 @@ customElements.define('my-window',
         elmnt.style.top = (elmnt.offsetTop - pos2) + "px"
         elmnt.style.left = (elmnt.offsetLeft - pos1) + "px"
       }
-    
+      /**
+       * Moves the element on mousedown.
+       *
+       */
       function closeDragElement () {
         // stop moving when mouse button is released:
         document.onmouseup = null
@@ -141,4 +172,3 @@ customElements.define('my-window',
       }
     }
   })
-

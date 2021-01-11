@@ -1,4 +1,15 @@
-// code src = https://codepen.io/Pomcer/details/yvrBeP
+
+/**
+ * Code from: https://codepen.io/Pomcer/pen/yvrBeP.
+ * The my-trophy web component module.
+ *
+ * @author Angelica Grass <ag223vg@student.lnu.se>
+ * @version 1.0.0
+ */
+
+/**
+ * Define template.
+ */
 
 const template = document.createElement('template')
 template.innerHTML = ` 
@@ -24,7 +35,6 @@ template.innerHTML = `
   min-width: 500px;
   min-height: 500px;
   margin: none;
-  /* background: black; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,15 +180,19 @@ template.innerHTML = `
     left: 50%;
     top: 80%;
   }
-  
 }
-
 </style>
 `
 
 customElements.define('my-trophy',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+    /**
+     * Creates an instance of the current type.
+     */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
