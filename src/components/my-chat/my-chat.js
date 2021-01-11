@@ -227,6 +227,7 @@ customElements.define('my-chat',
 
       this.nameBtn = this.shadowRoot.querySelector('#namebtn')
       this.inputName = this.shadowRoot.querySelector('#usernamefield')
+
       this.chatcontainer = this.shadowRoot.querySelector('#chatten')
       this.slide = this.shadowRoot.querySelector('#mycheck')
       this.allArea = this.shadowRoot.querySelectorAll('.slidedark')

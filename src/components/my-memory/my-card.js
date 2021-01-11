@@ -155,7 +155,6 @@ customElements.define('my-card',
      */
     unflipCards () {
       setTimeout(() => {
-        console.log(this.currentid)
         const cards = document.querySelector('desktop-window')
           .shadowRoot
           .querySelector('#windowcontainer').querySelector(`#${this.currentid}`)

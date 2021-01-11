@@ -231,7 +231,7 @@ customElements.define('desktop-window',
       // All windows z-index is set to 10 & the clicked windows z-index is set to 100
       y.forEach(element => {
         const myDiv = element.shadowRoot.querySelector('#mydiv')
-        myDiv.style.zIndex = '10' 
+        myDiv.style.zIndex = '10'
       })
       const x = event.target
       const clickeddiv = x.shadowRoot.querySelector('#mydiv')

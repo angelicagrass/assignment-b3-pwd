@@ -1,7 +1,7 @@
 const template = document.createElement('template')
 template.innerHTML = ` 
 <div id="mycontainer">
-  <h2 id="starttext">Här ska det va vara en massa text, lite presentation så folk fattar vad dom ska göra.</h2>
+  <h2 id="starttext">Get some random quote by pressing the button</h2>
     <div id="textintro">
       <div id="backbox" class='hide'>
         <h2 id="quotetext" class="hide">test</h2>    
@@ -11,10 +11,10 @@ template.innerHTML = `
         <button id="getquote">RANDOM QUOTE</button>
       </div>
     </div>
-  <button id="like">heart</button>
   <div id="next">
     <button id="newrandombtn" class="hide">NEXT</button>
 </div>
+
 <style>
   #next {
     position:static;
@@ -26,7 +26,7 @@ template.innerHTML = `
   }
 
   #starttext {
-    margin-top: 0px;
+    margin-top: 50px;
   }
 
   h2 {
@@ -137,8 +137,14 @@ template.innerHTML = `
 `
 
 customElements.define('my-own',
+/**
+ * Define custom element.
+ */
   class extends HTMLElement {
-    constructor() {
+    /**
+     * Creates an instance of the current type.
+     */
+    constructor () {
       super()
 
       this.attachShadow({ mode: 'open' })
@@ -151,7 +157,6 @@ customElements.define('my-own',
       this.newRandomBtn = this.shadowRoot.querySelector('#newrandombtn')
       this.backBox = this.shadowRoot.querySelector('#backbox')
       this.myContainer = this.shadowRoot.querySelector('#mycontainer')
-      this.likeBtn = this.shadowRoot.querySelector('#like')
       this.funnyQuotes = this.funnyQuotes.bind(this)
 
       this.quotesOnScreen = this.quotesOnScreen.bind(this)
@@ -182,32 +187,43 @@ customElements.define('my-own',
           this.funnyQuotes()
         }, 1500)
       })
-      this.likeBtn.addEventListener('click', () => {
-        this.saveToLocaleStorage()
-      })
     }
 
     /**
      * Removes eventlistener.
      */
-    disconnectedCallback () {}
+    disconnectedCallback () {
+      this.quoteBtn.removeEventListener('click', () => {
+        this.funnyQuotes()
+      })
 
-
-    saveToLocaleStorage () {
-      const quoteObj = {
-        quote: this.currentQuote
-      }
-      window.localStorage.setItem('quotes', JSON.stringify(quoteObj))
-
-      let existing = localStorage.getItem('quotes')
+      this.newRandomBtn.removeEventListener('click', () => {
+        if (this.firstImage === false) {
+          const imageToChange = this.shadowRoot.querySelector('.myimg')
+          imageToChange.classList.add('fade-out')
+          const fadeText = this.shadowRoot.querySelector('#quotetext')
+          fadeText.classList.add('fade-out')
+        }
+        setTimeout(() => {
+          this.funnyQuotes()
+        }, 1500)
+      })
     }
 
-    async loadImg() {
+    /**
+     * Fetches first background image from unsplash api.
+     *
+     */
+    async loadImg () {
       const image = await fetch('https://source.unsplash.com/user/dmosipenko')
       this.image = image.url
     }
 
-    async funnyQuotes() {
+    /**
+     * Fetches background image from unsplash api.
+     *
+     */
+    async funnyQuotes () {
       this.btnContainer.classList.add('hide')
       let fadeText = this.shadowRoot.querySelector('#quotetext')
       fadeText.classList.remove('fade-out')
@@ -224,8 +240,12 @@ customElements.define('my-own',
       this.quotesOnScreen()
     }
 
-    async randomBackground() {
-      let image = await fetch('https://source.unsplash.com/user/dmosipenko/500x400')
+    /**
+     * Fetches background image from unsplash api.
+     *
+     */
+    async randomBackground () {
+      const image = await fetch('https://source.unsplash.com/user/dmosipenko/500x400')
       this.image = image.url
 
       if (this.firstImage === false) {
@@ -247,7 +267,11 @@ customElements.define('my-own',
       }
     }
 
-    quotesOnScreen() {
+    /**
+     * Current quote on screen.
+     *
+     */
+    quotesOnScreen () {
       this.randomBackground()
       console.log('we are on screen')
       this.startText.innerHTML = ''
