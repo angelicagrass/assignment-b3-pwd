@@ -194,3 +194,5 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows,visualstudiocode.DS_*
 node_modules
+.DS_*
+node_modules
