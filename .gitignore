@@ -196,3 +196,5 @@ $RECYCLE.BIN/
 node_modules
 .DS_*
 node_modules
+.DS_*
+node_modules
