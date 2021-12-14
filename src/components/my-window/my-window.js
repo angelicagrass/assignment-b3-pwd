@@ -132,14 +132,14 @@ customElements.define('my-window',
       /**
        * Moves the element on mousedown.
        *
-       * @param {string} e the element to move.
+       * @param {string} windowDiv the element to move.
        */
-      function dragMouseDown (e) {
-        e = e || window.event
-        e.preventDefault()
+      function dragMouseDown (windowDiv) {
+        windowDiv = windowDiv || window.event
+        windowDiv.preventDefault()
         // get the mouse cursor position at startup:
-        pos3 = e.clientX
-        pos4 = e.clientY
+        pos3 = windowDiv.clientX
+        pos4 = windowDiv.clientY
         document.onmouseup = closeDragElement
         // call a function whenever the cursor moves:
         document.onmousemove = elementDrag
@@ -147,16 +147,16 @@ customElements.define('my-window',
       /**
        * Moves the element on mousedown.
        *
-       * @param {*} e - the element to move.
+       * @param {*} windowDiv - the element to move.
        */
-      function elementDrag (e) {
-        e = e || window.event
-        e.preventDefault()
+      function elementDrag (windowDiv) {
+        windowDiv = windowDiv || window.event
+        windowDiv.preventDefault()
         // calculate the new cursor position:
-        pos1 = pos3 - e.clientX
-        pos2 = pos4 - e.clientY
-        pos3 = e.clientX
-        pos4 = e.clientY
+        pos1 = pos3 - windowDiv.clientX
+        pos2 = pos4 - windowDiv.clientY
+        pos3 = windowDiv.clientX
+        pos4 = windowDiv.clientY
         // set the element's new position:
         elmnt.style.top = (elmnt.offsetTop - pos2) + 'px'
         elmnt.style.left = (elmnt.offsetLeft - pos1) + 'px'
