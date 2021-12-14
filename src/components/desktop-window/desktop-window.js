@@ -48,6 +48,7 @@ template.innerHTML = `
     }
 
   footer {
+    
     height: 70px;
     position: fixed;
     z-index: 2;
@@ -57,9 +58,10 @@ template.innerHTML = `
     right: 20%;
     left: 20%;
     width: 60%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.4);
     border-radius: 10px 10px 0 0;
     color: white; 
+    text-align: center;
   }
 
   #memory, #chat, #custom, #exchange {
