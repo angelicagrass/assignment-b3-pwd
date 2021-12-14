@@ -158,7 +158,7 @@ input:checked + .slider:before {
     padding: 0;
     list-style-type: none;
     position: absolute;
-    bottom: 150px;
+    bottom: 170px;
     top: 40px;
     overflow: scroll;
     -webkit-transform: rotate(180deg);
